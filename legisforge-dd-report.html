@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LegisForge — DD Report Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F7F3;
+    --page:#FDFDFB;
+    --ink:#1B1E27;
+    --ink-soft:#565A66;
+    --ink-faint:#8A8E99;
+    --rule:#DEDDD5;
+    --rule-strong:#C7C6BC;
+    --seal:#8A2A32;
+    --seal-soft:#F4E4E2;
+    --amber:#9C6B1E;
+    --amber-soft:#F5EAD4;
+    --verified:#2E6B4C;
+    --verified-soft:#E1EEE6;
+    --radius-sm:3px;
+    --radius-md:6px;
+    font-size:15px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+    border-bottom:1px solid var(--rule);
+    position:sticky; top:0; background:var(--paper); z-index:5;
+  }
+  .crumbs{display:flex; align-items:baseline; gap:8px; font-size:13.5px; color:var(--ink-soft);}
+  .crumbs .mark{font-family:'Source Serif 4', serif; font-weight:600; font-size:16px; color:var(--ink); margin-right:6px;}
+  .crumbs .sep{color:var(--rule-strong);}
+  .crumbs .current{color:var(--ink); font-weight:500;}
+  .flow-nav{display:flex;align-items:center;gap:10px;font-size:12px;}
+  .flow-nav a{color:var(--ink-soft);text-decoration:none;}
+  .flow-nav a:hover{color:var(--ink);text-decoration:underline;}
+  .export-row{display:flex; gap:8px;}
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif; font-size:12.5px;
+    padding:7px 14px; border-radius:var(--radius-sm);
+    border:1px solid var(--rule-strong); background:var(--page); color:var(--ink);
+    cursor:pointer;
+  }
+  .btn.primary{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+
+  .steps{
+    display:flex; align-items:center;
+    padding:16px 40px 0;
+    max-width:1180px; margin:0 auto;
+  }
+  .step{display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--ink-faint);}
+  .step .num{
+    width:22px;height:22px; border-radius:50%;
+    border:1px solid var(--rule-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-size:11px;
+    color:var(--ink-faint); background:var(--page); flex-shrink:0;
+  }
+  .step.done .num{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .step.current .num{border-color:var(--ink); color:var(--ink); font-weight:500;}
+  .step.current span.label{color:var(--ink); font-weight:500;}
+  .step-line{flex:1; height:1px; background:var(--rule-strong); margin:0 12px;}
+
+  .layout{
+    max-width:1180px; margin:0 auto;
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:32px;
+    padding:26px 40px 80px;
+  }
+
+  /* ---- left nav ---- */
+  .nav{position:sticky; top:70px; align-self:start;}
+  .nav .nav-label{
+    font-size:10.5px; font-weight:600; letter-spacing:0.03em;
+    color:var(--ink-faint); margin-bottom:10px;
+  }
+  .nav a{
+    display:block;
+    font-size:13px;
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding:6px 0;
+    border-left:2px solid transparent;
+    padding-left:10px;
+    margin-left:-2px;
+  }
+  .nav a.active{color:var(--ink); font-weight:500; border-left-color:var(--ink);}
+  .nav a .count{color:var(--ink-faint); font-size:11.5px; font-weight:400;}
+
+  /* ---- report page ---- */
+  .report{
+    background:var(--page);
+    border:1px solid var(--rule);
+    box-shadow:0 1px 0 var(--rule-strong);
+    padding:56px 64px;
+    max-width:760px;
+  }
+
+  .letterhead{
+    text-align:center;
+    padding-bottom:26px;
+    margin-bottom:36px;
+    border-bottom:1px solid var(--rule);
+  }
+  .letterhead .firm{
+    font-family:'Source Serif 4', serif;
+    font-size:14px;
+    letter-spacing:0.02em;
+    color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+  .letterhead h1{
+    font-family:'Source Serif 4', serif;
+    font-weight:700;
+    font-size:28px;
+    margin:0 0 8px;
+  }
+  .letterhead .deal-name{
+    font-family:'Source Serif 4', serif;
+    font-size:16px;
+    color:var(--ink-soft);
+    margin-bottom:14px;
+  }
+  .letterhead .meta-line{
+    font-size:12px;
+    color:var(--ink-faint);
+  }
+  .letterhead .confidential{
+    display:inline-block;
+    margin-top:16px;
+    font-size:10.5px;
+    letter-spacing:0.06em;
+    color:var(--seal);
+    border:1px solid var(--seal);
+    padding:3px 10px;
+    border-radius:2px;
+  }
+
+  .report section{margin-bottom:44px; scroll-margin-top:80px;}
+  .report h2{
+    font-family:'Source Serif 4', serif;
+    font-weight:600;
+    font-size:19px;
+    margin:0 0 16px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--rule);
+  }
+  .report h3{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--ink-soft);
+    margin:22px 0 10px;
+  }
+  .report p{
+    font-family:'Source Serif 4', serif;
+    font-size:15px;
+    line-height:1.7;
+    color:#2A2D36;
+    margin:0 0 14px;
+  }
+
+  .stat-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--rule);
+    border:1px solid var(--rule);
+    margin:20px 0 24px;
+  }
+  .stat-cell{background:var(--page); padding:14px 12px; text-align:center;}
+  .stat-cell .num{font-family:'Source Serif 4', serif; font-size:22px; font-weight:600;}
+  .stat-cell .num.high{color:var(--seal);}
+  .stat-cell .num.med{color:var(--amber);}
+  .stat-cell .label{font-size:10.5px; color:var(--ink-faint); margin-top:3px;}
+
+  .risk-item{
+    padding:12px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .risk-item:last-child{border-bottom:none;}
+  .risk-top{
+    display:flex; justify-content:space-between; align-items:baseline; gap:10px;
+    margin-bottom:5px;
+  }
+  .risk-title{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13.5px; font-weight:500; color:var(--ink);
+  }
+  .badge{
+    font-size:10px; font-weight:500;
+    padding:2px 7px; border-radius:2px;
+    white-space:nowrap; flex-shrink:0;
+  }
+  .badge.high{background:var(--seal-soft); color:var(--seal);}
+  .badge.med{background:var(--amber-soft); color:var(--amber);}
+  .badge.low{background:#EAEAE3; color:var(--ink-soft);}
+  .risk-meta{
+    font-size:11.5px; color:var(--ink-faint);
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .risk-meta .reg-flag{color:var(--seal); font-weight:500;}
+
+  .reg-table, .doc-table{
+    width:100%; border-collapse:collapse;
+    font-size:12.5px; margin:8px 0 20px;
+  }
+  .reg-table th, .doc-table th{
+    text-align:left; font-size:10.5px; font-weight:600;
+    color:var(--ink-faint); padding:7px 6px;
+    border-bottom:1px solid var(--rule-strong);
+  }
+  .reg-table td, .doc-table td{
+    padding:9px 6px; border-bottom:1px solid var(--rule);
+    color:var(--ink-soft); vertical-align:top;
+  }
+  .reg-status{font-size:11.5px; font-weight:500; display:flex; align-items:center; gap:5px;}
+  .reg-status .dot{width:6px;height:6px;border-radius:50%;}
+  .reg-status.mismatch{color:var(--seal);}
+  .reg-status.mismatch .dot{background:var(--seal);}
+  .reg-status.verified{color:var(--verified);}
+  .reg-status.verified .dot{background:var(--verified);}
+
+  .doc-table td.num-col, .doc-table th.num-col{text-align:right;}
+
+  .report-footer{
+    margin-top:44px; padding-top:16px;
+    border-top:1px solid var(--rule);
+    font-size:11px; color:var(--ink-faint);
+  }
+  @media (max-width:800px){
+    .topbar{padding:12px 16px; align-items:flex-start; gap:12px; flex-direction:column;}
+    .crumbs{font-size:12px; white-space:nowrap; overflow:hidden; max-width:100%;}
+    .export-row{width:100%;}
+    .export-row .btn{flex:1;}
+    .steps{padding:16px; overflow-x:auto; justify-content:flex-start;}
+    .step{flex:0 0 auto;}
+    .step-line{min-width:20px; margin:0 7px;}
+    .layout{display:block; padding:28px 16px 50px;}
+    .nav{display:flex; gap:8px; overflow-x:auto; padding-bottom:14px; margin-bottom:24px;}
+    .nav-label{display:none;}
+    .nav a{white-space:nowrap;}
+    .report{max-width:none;}
+    .letterhead h1{font-size:28px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="crumbs">
+    <a class="mark" href="legisforge-deal-intake.html">LegisForge</a>
+    <span>Hallwell / Nordvik Acquisition</span>
+    <span class="sep">/</span>
+    <span class="current">DD Report Preview</span>
+  </div>
+  <nav class="flow-nav" aria-label="Workflow navigation">
+    <a href="legisforge-risk-workspace.html">Back</a><span>/</span><a href="legisforge-deal-intake.html">New deal</a>
+  </nav>
+  <div class="export-row">
+    <button class="btn" id="export-word" type="button">Export to Word</button>
+    <button class="btn primary" id="export-pdf" type="button">Export to PDF</button>
+  </div>
+</div>
+
+<div class="steps">
+  <div class="step done"><span class="num">✓</span><span class="label">Deal intake</span></div>
+  <div class="step-line"></div>
+  <div class="step done"><span class="num">✓</span><span class="label">Upload</span></div>
+  <div class="step-line"></div>
+  <div class="step done"><span class="num">✓</span><span class="label">Classification</span></div>
+  <div class="step-line"></div>
+  <div class="step done"><span class="num">✓</span><span class="label">Handler review</span></div>
+  <div class="step-line"></div>
+  <div class="step done"><span class="num">✓</span><span class="label">Risk workspace</span></div>
+  <div class="step-line"></div>
+  <div class="step current"><span class="num">6</span><span class="label">Report</span></div>
+</div>
+
+<div class="layout">
+
+  <!-- LEFT NAV -->
+  <div class="nav">
+    <div class="nav-label">Contents</div>
+    <a href="#summary" class="active">Executive summary</a>
+    <a href="#corporate">Corporate <span class="count">14</span></a>
+    <a href="#ip">IP <span class="count">7</span></a>
+    <a href="#employment">Employment <span class="count">9</span></a>
+    <a href="#tax">Tax <span class="count">6</span></a>
+    <a href="#registry">Registry findings <span class="count">7</span></a>
+    <a href="#documents">Document summary <span class="count">58</span></a>
+  </div>
+
+  <!-- REPORT -->
+  <div class="report">
+
+    <div class="letterhead">
+      <div class="firm">Hallwell &amp; Voss LLP</div>
+      <h1>Due Diligence Report</h1>
+      <div class="deal-name">Project Nordvik — Proposed Acquisition</div>
+      <div class="meta-line">Prepared 9 September 2026 · R. Okafor, M. Thorne · Draft v1.2</div>
+      <div class="confidential">Privileged &amp; confidential</div>
+    </div>
+
+    <section id="summary">
+      <h2>Executive summary</h2>
+      <p>This report summarises the findings of legal due diligence conducted across five departments in connection with the proposed acquisition of the target company. A total of 41 issues were identified across 58 reviewed documents, including 7 registry mismatches against Companies House and the relevant IP register.</p>
+      <p>The most material findings concern gaps in the target's PSC and charge filings (Corporate), an unresolved dual-purpose licensing arrangement (Corporate/IP), and an undisclosed related-party loan. None of the findings identified are considered transaction-blocking, but several are recommended as conditions precedent or specific indemnities, set out by department below.</p>
+
+      <div class="stat-grid">
+        <div class="stat-cell"><div class="num">41</div><div class="label">Total issues</div></div>
+        <div class="stat-cell"><div class="num high">9</div><div class="label">High severity</div></div>
+        <div class="stat-cell"><div class="num med">19</div><div class="label">Medium severity</div></div>
+        <div class="stat-cell"><div class="num">13</div><div class="label">Low severity</div></div>
+      </div>
+    </section>
+
+    <section id="corporate">
+      <h2>Corporate</h2>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">PSC register omits beneficial owner above 25% threshold</span>
+          <span class="badge high">High</span>
+        </div>
+        <div class="risk-meta"><span>Ownership</span><span>Shareholders' Agreement, cl. 4.2</span><span class="reg-flag">Registry mismatch</span></div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Floating charge not reflected in Companies House filings</span>
+          <span class="badge high">High</span>
+        </div>
+        <div class="risk-meta"><span>Security</span><span>Debenture Deed</span><span class="reg-flag">Registry mismatch</span></div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Related-party loan undisclosed in latest filed accounts</span>
+          <span class="badge high">High</span>
+        </div>
+        <div class="risk-meta"><span>Financial</span><span>Intercompany Loan Agreement</span></div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Resigned director still listed as active officer</span>
+          <span class="badge med">Medium</span>
+        </div>
+        <div class="risk-meta"><span>Governance</span><span>Board Minutes, 14 Mar 2024</span><span class="reg-flag">Registry mismatch</span></div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Change of registered office not filed within statutory window</span>
+          <span class="badge med">Medium</span>
+        </div>
+        <div class="risk-meta"><span>Filing history</span><span>Correspondence bundle</span></div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Articles of association amendment not filed with registrar</span>
+          <span class="badge low">Low</span>
+        </div>
+        <div class="risk-meta"><span>Governance</span><span>Board Minutes, 2 Feb 2023</span></div>
+      </div>
+    </section>
+
+    <section id="ip">
+      <h2>IP</h2>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Licensing agreement also charged as security without dual registration</span>
+          <span class="badge high">High</span>
+        </div>
+        <div class="risk-meta"><span>Licensing</span><span>IP License Agreement</span><span class="reg-flag">Registry mismatch</span></div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Two registered trademarks lapsed without renewal</span>
+          <span class="badge med">Medium</span>
+        </div>
+        <div class="risk-meta"><span>Trademarks</span><span>Trademark Register Extract</span><span class="reg-flag">Registry mismatch</span></div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Patent assignment lacks countersignature from named inventor</span>
+          <span class="badge low">Low</span>
+        </div>
+        <div class="risk-meta"><span>Patents</span><span>Patent Assignment Deed</span></div>
+      </div>
+    </section>
+
+    <section id="employment">
+      <h2>Employment</h2>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Pension scheme rules reference a closed section without wind-up documentation</span>
+          <span class="badge med">Medium</span>
+        </div>
+        <div class="risk-meta"><span>Benefits</span><span>Pension Scheme Rules</span></div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Handbook policy on redundancy not updated since 2019 legislative change</span>
+          <span class="badge low">Low</span>
+        </div>
+        <div class="risk-meta"><span>Policy</span><span>Staff Handbook</span></div>
+      </div>
+    </section>
+
+    <section id="tax">
+      <h2>Tax</h2>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">VAT filing gap identified for Q3 2023</span>
+          <span class="badge med">Medium</span>
+        </div>
+        <div class="risk-meta"><span>Compliance</span><span>VAT Filings</span></div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-top">
+          <span class="risk-title">Deferred tax treatment inconsistent with 2023 computation</span>
+          <span class="badge low">Low</span>
+        </div>
+        <div class="risk-meta"><span>Computations</span><span>Tax Computations 2023</span></div>
+      </div>
+    </section>
+
+    <section id="registry">
+      <h2>Registry findings</h2>
+      <p>The table below consolidates every cross-check performed against Companies House and the relevant IP register.</p>
+      <table class="reg-table">
+        <tr><th>Check</th><th>Registry</th><th>Result</th></tr>
+        <tr>
+          <td>PSC — H. Reiss (31% indirect)</td>
+          <td>Companies House</td>
+          <td><div class="reg-status mismatch"><span class="dot"></span>Mismatch</div></td>
+        </tr>
+        <tr>
+          <td>Floating charge — Debenture Deed</td>
+          <td>Companies House</td>
+          <td><div class="reg-status mismatch"><span class="dot"></span>Mismatch</div></td>
+        </tr>
+        <tr>
+          <td>Director status — J. Calder</td>
+          <td>Companies House</td>
+          <td><div class="reg-status mismatch"><span class="dot"></span>Mismatch</div></td>
+        </tr>
+        <tr>
+          <td>Registered office address</td>
+          <td>Companies House</td>
+          <td><div class="reg-status verified"><span class="dot"></span>Verified OK</div></td>
+        </tr>
+        <tr>
+          <td>Trademark renewals — 4 marks</td>
+          <td>UK IPO</td>
+          <td><div class="reg-status mismatch"><span class="dot"></span>Mismatch — 2 lapsed</div></td>
+        </tr>
+        <tr>
+          <td>Patent ownership — EP core patents</td>
+          <td>UK IPO</td>
+          <td><div class="reg-status verified"><span class="dot"></span>Verified OK</div></td>
+        </tr>
+        <tr>
+          <td>Charge over IP assets</td>
+          <td>UK IPO</td>
+          <td><div class="reg-status verified"><span class="dot"></span>Verified OK</div></td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="documents">
+      <h2>Document summary</h2>
+      <table class="doc-table">
+        <tr><th>Department</th><th class="num-col">Documents</th><th class="num-col">Issues raised</th></tr>
+        <tr><td>Corporate</td><td class="num-col">14</td><td class="num-col">6</td></tr>
+        <tr><td>IP</td><td class="num-col">7</td><td class="num-col">3</td></tr>
+        <tr><td>Employment</td><td class="num-col">9</td><td class="num-col">2</td></tr>
+        <tr><td>Tax</td><td class="num-col">6</td><td class="num-col">2</td></tr>
+        <tr><td>Regulatory</td><td class="num-col">5</td><td class="num-col">0</td></tr>
+        <tr><td>Litigation</td><td class="num-col">3</td><td class="num-col">0</td></tr>
+        <tr><td>General Commercial</td><td class="num-col">14</td><td class="num-col">0</td></tr>
+        <tr><td><b>Total</b></td><td class="num-col"><b>58</b></td><td class="num-col"><b>13*</b></td></tr>
+      </table>
+      <p style="font-size:11.5px; color:var(--ink-faint); font-family:'IBM Plex Sans', sans-serif;">*Figures shown reflect issues from sections included in this preview; the full report additionally includes Regulatory, Litigation and General Commercial findings.</p>
+    </section>
+
+    <div class="report-footer">
+      Prepared using LegisForge. This report is a working draft for internal review and remains subject to partner sign-off before circulation to the client.
+    </div>
+
+  </div>
+</div>
+
+<script>
+function exportReport(button, format){
+  const original = button.textContent;
+  button.textContent = `Preparing ${format}...`;
+  button.disabled = true;
+  setTimeout(() => {
+    button.textContent = `${format} ready`;
+    button.disabled = false;
+  }, 700);
+}
+document.getElementById('export-word').addEventListener('click', event => exportReport(event.currentTarget, 'Word'));
+document.getElementById('export-pdf').addEventListener('click', event => {
+  exportReport(event.currentTarget, 'PDF');
+  setTimeout(() => window.print(), 750);
+});
+</script>
+
+</body>
+</html>

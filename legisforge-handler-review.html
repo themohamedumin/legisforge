@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LegisForge — Handler Routing Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F7F3;
+    --panel:#FDFDFB;
+    --ink:#1B1E27;
+    --ink-soft:#565A66;
+    --ink-faint:#8A8E99;
+    --rule:#DEDDD5;
+    --rule-strong:#C7C6BC;
+    --seal:#8A2A32;
+    --seal-soft:#F4E4E2;
+    --amber:#9C6B1E;
+    --amber-soft:#F5EAD4;
+    --verified:#2E6B4C;
+    --verified-soft:#E1EEE6;
+    --radius-sm:3px;
+    --radius-md:6px;
+    font-size:15px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+    border-bottom:1px solid var(--rule);
+  }
+  .crumbs{display:flex; align-items:baseline; gap:8px; font-size:13.5px; color:var(--ink-soft);}
+  .crumbs .mark{font-family:'Source Serif 4', serif; font-weight:600; font-size:16px; color:var(--ink); margin-right:6px;}
+  .crumbs .sep{color:var(--rule-strong);}
+  .crumbs .current{color:var(--ink); font-weight:500;}
+  .flow-nav{display:flex;align-items:center;gap:10px;font-size:12px;}
+  .flow-nav a{color:var(--ink-soft);text-decoration:none;}
+  .flow-nav a:hover{color:var(--ink);text-decoration:underline;}
+
+  .steps{
+    display:flex; align-items:center;
+    padding:16px 40px 0;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .step{display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--ink-faint);}
+  .step .num{
+    width:22px;height:22px; border-radius:50%;
+    border:1px solid var(--rule-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-size:11px;
+    color:var(--ink-faint); background:var(--panel); flex-shrink:0;
+  }
+  .step.done .num{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .step.current .num{border-color:var(--ink); color:var(--ink); font-weight:500;}
+  .step.current span.label{color:var(--ink); font-weight:500;}
+  .step-line{flex:1; height:1px; background:var(--rule-strong); margin:0 12px;}
+
+  .page-head{
+    max-width:1180px; margin:0 auto;
+    padding:22px 40px 14px;
+    display:flex; justify-content:space-between; align-items:flex-end;
+  }
+  .page-head h1{
+    font-family:'Source Serif 4', serif; font-weight:600; font-size:22px; margin:0 0 6px;
+  }
+  .page-head .sub{font-size:13px; color:var(--ink-soft); margin:0;}
+  .progress-pill{
+    font-size:11.5px; color:var(--ink-soft);
+    border:1px solid var(--rule-strong);
+    border-radius:12px;
+    padding:5px 12px;
+    background:var(--panel);
+  }
+
+  .workspace{
+    max-width:1180px; margin:0 auto;
+    display:grid;
+    grid-template-columns:340px 1fr;
+    border:1px solid var(--rule);
+    border-radius:var(--radius-md);
+    margin-bottom:16px;
+    min-height:560px;
+  }
+  .left-col{border-right:1px solid var(--rule);}
+  .list-section-head{
+    padding:12px 16px 6px;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--ink-soft);
+    background:var(--panel);
+  }
+  .list-section-head.needs{color:var(--amber);}
+
+  .doc-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:11px 16px;
+    border-bottom:1px solid var(--rule);
+    cursor:pointer;
+  }
+  .doc-row.active{background:var(--panel); box-shadow:inset 3px 0 0 var(--ink);}
+  .doc-row .type-icon{
+    width:24px;height:24px;
+    border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:8.5px; font-weight:500; color:var(--paper);
+    background:var(--ink-soft); flex-shrink:0; margin-top:1px;
+  }
+  .type-icon.pdf{background:#7A3B3B;}
+  .type-icon.zip{background:#6B6650;}
+  .doc-row .fname{font-size:12.5px; color:var(--ink); margin-bottom:4px; line-height:1.35;}
+  .doc-row .badges{display:flex; flex-wrap:wrap; gap:5px;}
+  .mini-badge{
+    font-size:10px;
+    padding:2px 6px;
+    border-radius:2px;
+    color:var(--ink-soft);
+    background:#EFEEE7;
+  }
+  .mini-badge.conflict{background:var(--amber-soft); color:var(--amber);}
+  .mini-badge.unrouted{background:var(--seal-soft); color:var(--seal);}
+  .mini-badge.done{background:var(--verified-soft); color:var(--verified);}
+
+  .right-col{display:flex; flex-direction:column;}
+  .preview-area{
+    padding:16px 20px 0;
+  }
+  .preview-meta{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom:12px;
+  }
+  .preview-meta h2{
+    font-family:'Source Serif 4', serif;
+    font-size:17px; font-weight:600; margin:0 0 4px;
+  }
+  .preview-meta .fmeta{font-size:11.5px; color:var(--ink-faint);}
+  .pdf-preview{
+    border:1px solid var(--rule);
+    border-radius:var(--radius-sm);
+    background:repeating-linear-gradient(135deg, #EFEEE7, #EFEEE7 10px, #F5F4EF 10px, #F5F4EF 20px);
+    height:170px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink-faint); font-size:11.5px;
+    margin-bottom:16px;
+  }
+
+  .ai-panel{
+    background:var(--amber-soft);
+    border:1px solid #E6D3A8;
+    border-radius:var(--radius-sm);
+    padding:12px 14px;
+    margin:0 20px 18px;
+    font-size:12.5px;
+    color:#5F4416;
+  }
+  .ai-panel .head{
+    display:flex; align-items:center; gap:8px;
+    font-weight:600; font-size:11.5px; color:var(--amber); margin-bottom:6px;
+  }
+  .ai-panel p{margin:0; line-height:1.55;}
+  .ai-panel .quote{
+    display:block;
+    margin-top:8px;
+    font-family:'Source Serif 4', serif;
+    font-style:italic;
+    font-size:12.5px;
+    color:#5F4416;
+    border-left:2px solid var(--amber);
+    padding-left:10px;
+  }
+
+  .routing-section{padding:0 20px 20px;}
+  .routing-section h3{
+    font-size:11px; font-weight:600; letter-spacing:0.02em;
+    color:var(--ink-soft); margin:0 0 10px;
+  }
+  .dept-chip-row{
+    display:flex; flex-wrap:wrap; gap:7px;
+    margin-bottom:18px;
+  }
+  .dept-chip{
+    font-size:12px;
+    padding:6px 12px;
+    border-radius:14px;
+    border:1px solid var(--rule-strong);
+    background:var(--panel);
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .dept-chip.selected{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:var(--paper);
+  }
+  .dept-chip.suggested-only{
+    border-style:dashed;
+  }
+
+  .action-row{
+    display:flex; gap:10px; flex-wrap:wrap;
+    margin-bottom:16px;
+  }
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:12.5px;
+    padding:8px 14px;
+    border-radius:var(--radius-sm);
+    border:1px solid var(--rule-strong);
+    background:var(--panel);
+    color:var(--ink);
+    cursor:pointer;
+  }
+  .btn.primary{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .btn.warn{border-color:var(--seal); color:var(--seal); background:var(--panel);}
+  .btn.big-primary{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13px;
+    padding:9px 16px;
+    border-radius:var(--radius-sm);
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    cursor:pointer;
+  }
+
+  .routing-log{
+    border-top:1px solid var(--rule);
+    padding-top:12px;
+  }
+  .log-item{
+    display:flex; gap:10px;
+    font-size:11.5px;
+    padding:5px 0;
+    color:var(--ink-soft);
+  }
+  .log-item .when{font-family:'IBM Plex Mono', monospace; color:var(--ink-faint); white-space:nowrap;}
+
+  .footer-bar{
+    max-width:1180px; margin:0 auto;
+    padding:8px 0 60px;
+    display:flex; justify-content:space-between; align-items:center;
+    border-top:1px solid var(--rule);
+    margin-top: 4px;
+  }
+  .footer-note{font-size:12px; color:var(--ink-faint); padding-top:16px;}
+  @media (max-width:700px){
+    .topbar{padding:12px 16px;}
+    .crumbs{font-size:12px; white-space:nowrap; overflow:hidden;}
+    .steps{padding:16px; overflow-x:auto; justify-content:flex-start;}
+    .step{flex:0 0 auto;}
+    .step-line{min-width:20px; margin:0 7px;}
+    .page-head{padding:24px 16px 16px; display:block;}
+    .progress-pill{display:inline-block; margin-top:12px;}
+    .workspace{display:block; margin:0 16px;}
+    .left-col{max-height:360px; border-right:0; border-bottom:1px solid var(--rule);}
+    .right-col{border-left:0;}
+    .preview-meta{align-items:flex-start; flex-direction:column; gap:10px;}
+    .action-row{flex-direction:column; align-items:stretch;}
+    .action-row .btn{width:100%;}
+    .footer-bar{margin:0 16px; padding-bottom:28px; align-items:stretch; flex-direction:column; gap:9px;}
+    .footer-bar .btn{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="crumbs">
+    <a class="mark" href="legisforge-deal-intake.html">LegisForge</a>
+    <span>Hallwell / Nordvik Acquisition</span>
+    <span class="sep">/</span>
+    <span class="current">Handler Routing Review</span>
+  </div>
+  <nav class="flow-nav" aria-label="Workflow navigation">
+    <a href="legisforge-ai-classification.html">Back</a><span>/</span><a href="legisforge-risk-workspace.html">Next</a>
+  </nav>
+</div>
+
+<div class="steps">
+  <div class="step done"><span class="num">✓</span><span class="label">Deal intake</span></div>
+  <div class="step-line"></div>
+  <div class="step done"><span class="num">✓</span><span class="label">Upload</span></div>
+  <div class="step-line"></div>
+  <div class="step done"><span class="num">✓</span><span class="label">Classification</span></div>
+  <div class="step-line"></div>
+  <div class="step current"><span class="num">4</span><span class="label">Handler review</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">5</span><span class="label">Risk workspace</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">6</span><span class="label">Report</span></div>
+</div>
+
+<div class="page-head">
+  <div>
+    <h1>Routing review</h1>
+    <p class="sub">Confirm department assignments before documents are distributed to each team.</p>
+  </div>
+  <span class="progress-pill">1 of 3 flagged documents resolved</span>
+</div>
+
+<div class="workspace">
+
+  <!-- LEFT: document list -->
+  <div class="left-col">
+    <div class="list-section-head needs">Needs decision (2)</div>
+
+    <div class="doc-row active">
+      <div class="type-icon pdf">PDF</div>
+      <div>
+        <div class="fname">IP License Agreement.pdf</div>
+        <div class="badges"><span class="mini-badge conflict">Conflict</span></div>
+      </div>
+    </div>
+
+    <div class="doc-row">
+      <div class="type-icon zip">ZIP</div>
+      <div>
+        <div class="fname">Scanned_Bundle_07.zip</div>
+        <div class="badges"><span class="mini-badge unrouted">Unrouted · 39%</span></div>
+      </div>
+    </div>
+
+    <div class="list-section-head">Recently resolved</div>
+
+    <div class="doc-row">
+      <div class="type-icon pdf">PDF</div>
+      <div>
+        <div class="fname">Correspondence_Misc.pdf</div>
+        <div class="badges"><span class="mini-badge done">Approved → General Commercial</span></div>
+      </div>
+    </div>
+
+    <div class="list-section-head">All documents (55)</div>
+
+    <div class="doc-row">
+      <div class="type-icon pdf">PDF</div>
+      <div>
+        <div class="fname">Shareholders' Agreement.pdf</div>
+        <div class="badges"><span class="mini-badge done">Corporate</span></div>
+      </div>
+    </div>
+
+    <div class="doc-row">
+      <div class="type-icon pdf">PDF</div>
+      <div>
+        <div class="fname">Trademark Register Extract.pdf</div>
+        <div class="badges"><span class="mini-badge done">IP</span></div>
+      </div>
+    </div>
+
+    <div class="doc-row">
+      <div class="type-icon zip">ZIP</div>
+      <div>
+        <div class="fname">Employment Contracts Bundle.zip</div>
+        <div class="badges"><span class="mini-badge done">Employment</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: preview + routing decision -->
+  <div class="right-col">
+    <div class="preview-area">
+      <div class="preview-meta">
+        <div>
+          <h2>IP License Agreement.pdf</h2>
+          <div class="fmeta">12 pages · Uploaded 09:41 · Extracted via OCR</div>
+        </div>
+        <button class="btn" id="open-viewer" type="button">Open full viewer</button>
+      </div>
+      <div class="pdf-preview">PDF preview — page 1 of 12</div>
+    </div>
+
+    <div class="ai-panel">
+      <div class="head">⚠ AI flagged a routing conflict</div>
+      <p>Classified 58% Corporate, 42% IP. The agreement both licenses trademarks (IP subject matter) and grants a security interest referenced in the Debenture Deed (Corporate subject matter).</p>
+      <span class="quote">"...Licensor grants Licensee a non-exclusive license to the Marks, and this Agreement is charged as security under the Debenture dated 3 January 2022..."</span>
+    </div>
+
+    <div class="routing-section">
+      <h3>Route to department(s)</h3>
+      <div class="dept-chip-row">
+        <span class="dept-chip selected">Corporate</span>
+        <span class="dept-chip selected">IP</span>
+        <span class="dept-chip">Employment</span>
+        <span class="dept-chip">Tax</span>
+        <span class="dept-chip">Regulatory</span>
+        <span class="dept-chip">Litigation</span>
+        <span class="dept-chip">General Commercial</span>
+      </div>
+
+      <h3>Actions</h3>
+      <div class="action-row">
+        <button class="btn" id="reassign" type="button">Reassign</button>
+        <button class="btn" id="duplicate" type="button">Duplicate to multiple teams</button>
+        <button class="btn warn" id="unresolved" type="button">Mark unresolved</button>
+        <button class="btn primary" id="approve-routing" type="button">Approve routing</button>
+      </div>
+
+      <div class="routing-log">
+        <h3>Routing history</h3>
+        <div class="log-item"><span class="when">09:52</span><span>AI classification: 58% Corporate, 42% IP — flagged as conflict</span></div>
+        <div class="log-item"><span class="when">10:15</span><span><b style="color:var(--ink);">R. Okafor</b> reviewed and selected both departments</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-bar">
+  <span class="footer-note">2 documents still need a routing decision before distribution</span>
+  <button class="btn big-primary" id="distribute" type="button">Distribute documents to departments</button>
+</div>
+
+<script>
+document.getElementById('open-viewer').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Viewer opened';
+  document.querySelector('.pdf-preview').textContent = 'Full viewer opened — page 1 of 12';
+});
+document.getElementById('reassign').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Select departments below';
+  document.querySelector('.dept-chip-row').scrollIntoView({behavior:'smooth', block:'center'});
+});
+document.getElementById('duplicate').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Departments selected';
+  document.querySelectorAll('.dept-chip.selected').forEach(chip => chip.classList.add('selected'));
+});
+document.querySelectorAll('.doc-row').forEach(row => row.addEventListener('click', () => {
+  document.querySelectorAll('.doc-row').forEach(item => item.classList.remove('active'));
+  row.classList.add('active');
+  const name = row.querySelector('.fname').textContent;
+  document.querySelector('.preview-meta h2').textContent = name;
+}));
+document.querySelectorAll('.dept-chip').forEach(chip => chip.addEventListener('click', () => chip.classList.toggle('selected')));
+const footerNote = document.querySelector('.footer-note');
+document.getElementById('unresolved').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Marked unresolved';
+  footerNote.textContent = 'Issue marked for follow-up';
+});
+document.getElementById('approve-routing').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Routing approved';
+  event.currentTarget.disabled = true;
+  footerNote.textContent = 'All routing decisions approved';
+});
+document.getElementById('distribute').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Documents distributed';
+  event.currentTarget.disabled = true;
+  localStorage.setItem('legisforgeReviewComplete', 'true');
+  setTimeout(() => { window.location.href = 'legisforge-risk-workspace.html'; }, 250);
+});
+</script>
+
+</body>
+</html>
