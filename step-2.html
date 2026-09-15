@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LegisForge — Document Upload</title>
+<link rel="stylesheet" href="step-2.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="crumbs">
+    <a class="mark" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\web\dashboard.html">LegisForge</a>
+    <span>Hallwell / Nordvik Acquisition</span>
+    <span class="sep">/</span>
+    <span class="current">Document Upload</span>
+  </div>
+  <nav class="flow-nav" aria-label="Workflow navigation">
+    <a href="step-1.html">Back</a><span>/</span><a href="step-3.html">Next</a>
+  </nav>
+</div>
+
+<div class="steps">
+  <div class="step done"><span class="num">✓</span><span class="label">Deal intake</span></div>
+  <div class="step-line"></div>
+  <div class="step current"><span class="num">2</span><span class="label">Upload</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">3</span><span class="label">Classification</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">4</span><span class="label">Handler review</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">5</span><span class="label">Risk workspace</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">6</span><span class="label">Report</span></div>
+</div>
+
+<div class="page">
+  <h1>Upload data room documents</h1>
+  <p class="sub">Upload files directly, or connect a data room link. Documents are classified into departments after upload completes.</p>
+
+  <div class="dropzone" id="dropzone" role="button" tabindex="0">
+    <div class="icon">↥</div>
+    <div class="primary-txt">Drag files here, or <b>browse from your computer</b></div>
+    <div class="secondary-txt">PDF, DOCX, and ZIP folders · up to 2 GB per file</div>
+  </div>
+
+  <div class="or-row"><div class="line"></div>Or connect a data room<div class="line"></div></div>
+
+  <div class="dataroom-row">
+    <input type="text" placeholder="Paste a data room link (Datasite, Intralinks, SharePoint)">
+    <button class="btn" id="connect-room" type="button">Connect</button>
+  </div>
+
+  <div class="table-head-row">
+    <h2>Files</h2>
+    <span class="count">6 files · all ready</span>
+  </div>
+
+  <div class="file-table">
+
+    <div class="file-row">
+      <div class="type-icon pdf">PDF</div>
+      <div class="file-info">
+        <div class="fname">Shareholders' Agreement.pdf</div>
+        <div class="fmeta">Uploaded 09:41</div>
+      </div>
+      <div class="file-size">2.4 MB</div>
+      <div class="status-col">
+        <div class="status-txt complete"><span class="dot"></span>Complete</div>
+      </div>
+      <div class="action-col"><button class="btn ghost small">Remove</button></div>
+    </div>
+
+    <div class="file-row">
+      <div class="type-icon pdf">PDF</div>
+      <div class="file-info">
+        <div class="fname">Debenture Deed.pdf</div>
+        <div class="fmeta">Uploaded 09:41</div>
+      </div>
+      <div class="file-size">1.1 MB</div>
+      <div class="status-col">
+        <div class="status-txt complete"><span class="dot"></span>Complete</div>
+      </div>
+      <div class="action-col"><button class="btn ghost small">Remove</button></div>
+    </div>
+
+    <div class="file-row">
+      <div class="type-icon docx">DOC</div>
+      <div class="file-info">
+        <div class="fname">Board Minutes — 14 Mar 2024.docx</div>
+        <div class="fmeta">340 KB</div>
+      </div>
+      <div class="file-size">62%</div>
+      <div class="status-col">
+        <div class="status-txt complete"><span class="dot"></span>Complete</div>
+      </div>
+      <div class="action-col"><button class="btn ghost small">Remove</button></div>
+    </div>
+
+    <div class="file-row">
+      <div class="type-icon zip">ZIP</div>
+      <div class="file-info">
+        <div class="fname">DataRoom_Batch3.zip</div>
+        <div class="fmeta">128 MB · 340 files inside</div>
+      </div>
+      <div class="file-size">18%</div>
+      <div class="status-col">
+        <div class="status-txt complete"><span class="dot"></span>Complete</div>
+      </div>
+      <div class="action-col"><button class="btn ghost small">Remove</button></div>
+    </div>
+
+    <div class="file-row">
+      <div class="type-icon pdf">PDF</div>
+      <div class="file-info">
+        <div class="fname">IP License Agreement.pdf</div>
+        <div class="fmeta">890 KB</div>
+      </div>
+      <div class="file-size">—</div>
+      <div class="status-col">
+        <div class="status-txt complete"><span class="dot"></span>Complete</div>
+      </div>
+      <div class="action-col"><button class="btn ghost small">Remove</button></div>
+    </div>
+
+    <div class="file-row">
+      <div class="type-icon zip">ZIP</div>
+      <div class="file-info">
+        <div class="fname">Employment Contracts Bundle.zip</div>
+        <div class="fmeta">45 MB</div>
+      </div>
+      <div class="file-size">Ready</div>
+      <div class="status-col">
+        <div class="status-txt complete"><span class="dot"></span>Complete</div>
+      </div>
+      <div class="action-col"><button class="btn ghost small">Remove</button></div>
+    </div>
+
+  </div>
+
+  <div class="footer-bar">
+    <span class="footer-note">All files ready to classify</span>
+    <button class="btn primary" id="next-classification" type="button" disabled>Next: AI Classification</button>
+  </div>
+</div>
+
+<script>
+const dropzone = document.getElementById('dropzone');
+const fileTable = document.querySelector('.file-table');
+const nextButton = document.getElementById('next-classification');
+const attentionNote = document.querySelector('.footer-note');
+const fileInput = document.createElement('input');
+fileInput.type = 'file';
+fileInput.multiple = true;
+fileInput.accept = '.pdf,.doc,.docx,.zip';
+fileInput.hidden = true;
+document.body.appendChild(fileInput);
+
+function updateUploadState(){
+  const failed = document.querySelectorAll('.status-txt.error').length;
+  const uploading = document.querySelectorAll('.status-txt.uploading').length;
+  nextButton.disabled = failed > 0 || uploading > 0;
+  attentionNote.textContent = failed ? `${failed} file needs attention before continuing` : 'All files ready to classify';
+}
+function addFiles(files){
+  [...files].forEach(file => {
+    const row = document.createElement('div');
+    row.className = 'file-row';
+    const extension = file.name.split('.').pop().toUpperCase();
+    row.innerHTML = `<div class="type-icon ${extension === 'PDF' ? 'pdf' : extension === 'ZIP' ? 'zip' : 'docx'}">${extension}</div><div class="file-info"><div class="fname">${file.name}</div><div class="fmeta">Added just now</div></div><div class="file-size">${Math.max(1, Math.round(file.size / 1024))} KB</div><div class="status-col"><div class="status-txt complete"><span class="dot"></span>Complete</div></div><div class="action-col"><button class="btn ghost small" type="button">Remove</button></div>`;
+    fileTable.appendChild(row);
+  });
+  updateUploadState();
+}
+dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') fileInput.click(); });
+dropzone.addEventListener('dragover', event => { event.preventDefault(); dropzone.classList.add('dragging'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragging'));
+dropzone.addEventListener('drop', event => { event.preventDefault(); dropzone.classList.remove('dragging'); addFiles(event.dataTransfer.files); });
+fileInput.addEventListener('change', () => addFiles(fileInput.files));
+fileTable.addEventListener('click', event => {
+  const button = event.target.closest('button');
+  if (!button) return;
+  const row = button.closest('.file-row');
+  if (button.textContent.trim() === 'Retry') row.querySelector('.status-txt').className = 'status-txt complete';
+  else row.remove();
+  updateUploadState();
+});
+document.getElementById('connect-room').addEventListener('click', event => {
+  const input = event.currentTarget.previousElementSibling;
+  if (!input.value.trim()) { input.focus(); return; }
+  event.currentTarget.textContent = 'Connected';
+  event.currentTarget.disabled = true;
+});
+nextButton.addEventListener('click', () => { window.location.href = 'step-3.html'; });
+updateUploadState();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LegisForge — AI Classification</title>
+<link rel="stylesheet" href="step-3.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="crumbs">
+    <a class="mark" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\web\dashboard.html">LegisForge</a>
+    <span>Hallwell / Nordvik Acquisition</span>
+    <span class="sep">/</span>
+    <span class="current">AI Classification</span>
+  </div>
+  <nav class="flow-nav" aria-label="Workflow navigation">
+    <a href="step-2.html">Back</a><span>/</span><a href="step-4.html">Next</a>
+  </nav>
+</div>
+
+<div class="steps">
+  <div class="step done"><span class="num">✓</span><span class="label">Deal intake</span></div>
+  <div class="step-line"></div>
+  <div class="step done"><span class="num">✓</span><span class="label">Upload</span></div>
+  <div class="step-line"></div>
+  <div class="step current"><span class="num">3</span><span class="label">Classification</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">4</span><span class="label">Handler review</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">5</span><span class="label">Risk workspace</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">6</span><span class="label">Report</span></div>
+</div>
+
+<div class="page-head">
+  <div>
+    <h1>AI classification</h1>
+    <p class="sub">58 documents sorted into departments. Drag a document to reassign it.</p>
+  </div>
+  <div class="legend">
+    <span class="sw"><span class="box" style="background:var(--amber-soft); border:1px solid var(--amber);"></span>Multi-team / conflict</span>
+    <span class="sw"><span class="box" style="background:var(--paper); border:1px dashed var(--rule-strong);"></span>Low confidence</span>
+  </div>
+</div>
+
+<div class="board-wrap">
+  <div class="board">
+
+    <!-- Corporate -->
+    <div class="col">
+      <div class="col-head">
+        <div class="dept-row"><span class="dept-mark mark-corp"></span><span class="dept-name">Corporate</span></div>
+        <span class="count">14 documents</span>
+      </div>
+      <div class="card-stack">
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Shareholders' Agreement.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">96%</span></div>
+        </div>
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Debenture Deed.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">94%</span></div>
+        </div>
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Board Minutes — 14 Mar 2024.docx</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag docx">DOC</span><span class="confidence">91%</span></div>
+        </div>
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Articles of Association.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">98%</span></div>
+        </div>
+        <div class="doc-card conflict">
+          <div class="drag-row"><div class="fname">IP License Agreement.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">58%</span></div>
+          <div class="conflict-chip">Also: IP</div>
+        </div>
+      </div>
+      <div class="col-foot">+9 more</div>
+    </div>
+
+    <!-- IP -->
+    <div class="col">
+      <div class="col-head">
+        <div class="dept-row"><span class="dept-mark mark-ip"></span><span class="dept-name">IP</span></div>
+        <span class="count">7 documents</span>
+      </div>
+      <div class="card-stack">
+        <div class="doc-card conflict">
+          <div class="drag-row"><div class="fname">IP License Agreement.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">58%</span></div>
+          <div class="conflict-chip">Also: Corporate</div>
+        </div>
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Trademark Register Extract.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">97%</span></div>
+        </div>
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Patent Assignment Deed.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">92%</span></div>
+        </div>
+      </div>
+      <div class="col-foot">+4 more</div>
+    </div>
+
+    <!-- Employment -->
+    <div class="col">
+      <div class="col-head">
+        <div class="dept-row"><span class="dept-mark mark-emp"></span><span class="dept-name">Employment</span></div>
+        <span class="count">9 documents</span>
+      </div>
+      <div class="card-stack">
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Employment Contracts Bundle.zip</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag zip">ZIP</span><span class="confidence">95%</span></div>
+        </div>
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Staff Handbook.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">99%</span></div>
+        </div>
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Pension Scheme Rules.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">93%</span></div>
+        </div>
+      </div>
+      <div class="col-foot">+6 more</div>
+    </div>
+
+    <!-- Tax -->
+    <div class="col">
+      <div class="col-head">
+        <div class="dept-row"><span class="dept-mark mark-tax"></span><span class="dept-name">Tax</span></div>
+        <span class="count">6 documents</span>
+      </div>
+      <div class="card-stack">
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Tax Computations 2023.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">96%</span></div>
+        </div>
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">VAT Filings.zip</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag zip">ZIP</span><span class="confidence">90%</span></div>
+        </div>
+      </div>
+      <div class="col-foot">+4 more</div>
+    </div>
+
+    <!-- Regulatory -->
+    <div class="col">
+      <div class="col-head">
+        <div class="dept-row"><span class="dept-mark mark-reg"></span><span class="dept-name">Regulatory</span></div>
+        <span class="count">5 documents</span>
+      </div>
+      <div class="card-stack">
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Environmental Permit.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">94%</span></div>
+        </div>
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Regulatory Correspondence.zip</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag zip">ZIP</span><span class="confidence">88%</span></div>
+        </div>
+      </div>
+      <div class="col-foot">+3 more</div>
+    </div>
+
+    <!-- Litigation -->
+    <div class="col">
+      <div class="col-head">
+        <div class="dept-row"><span class="dept-mark mark-lit"></span><span class="dept-name">Litigation</span></div>
+        <span class="count">3 documents</span>
+      </div>
+      <div class="card-stack">
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Claim Particulars — Doe v Target.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">97%</span></div>
+        </div>
+      </div>
+      <div class="col-foot">+2 more</div>
+    </div>
+
+    <!-- General Commercial -->
+    <div class="col">
+      <div class="col-head">
+        <div class="dept-row"><span class="dept-mark mark-gen"></span><span class="dept-name">General Commercial</span></div>
+        <span class="count">14 documents</span>
+      </div>
+      <div class="card-stack">
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">Supply Agreement — Acme Ltd.pdf</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag pdf">PDF</span><span class="confidence">95%</span></div>
+        </div>
+        <div class="doc-card">
+          <div class="drag-row"><div class="fname">NDA — Various Counterparties.zip</div><span class="handle">⠿</span></div>
+          <div class="bottom-row"><span class="type-tag zip">ZIP</span><span class="confidence">89%</span></div>
+        </div>
+      </div>
+      <div class="col-foot">+12 more</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="review-tray">
+  <div class="tray-box">
+    <span class="tray-label">Needs manual routing —</span>
+    <div class="tray-doc">Correspondence_Misc.pdf<span class="conf">54%</span></div>
+    <div class="tray-doc">Scanned_Bundle_07.zip<span class="conf">39%</span></div>
+  </div>
+</div>
+
+<div class="footer-bar">
+  <span class="footer-note">1 conflict and 2 unrouted documents to resolve before sending to review</span>
+  <button class="btn primary" id="send-to-review" type="button">Send to Corporate Handler Review</button>
+</div>
+
+<script>
+let draggedCard = null;
+document.querySelectorAll('.doc-card').forEach(card => {
+  card.draggable = true;
+  card.addEventListener('dragstart', event => {
+    draggedCard = card;
+    event.dataTransfer.effectAllowed = 'move';
+  });
+});
+document.querySelectorAll('.card-stack').forEach(stack => {
+  stack.addEventListener('dragover', event => event.preventDefault());
+  stack.addEventListener('drop', event => {
+    event.preventDefault();
+    if (draggedCard && draggedCard.parentElement !== stack) stack.appendChild(draggedCard);
+    draggedCard = null;
+  });
+});
+document.querySelectorAll('.dept-chip').forEach(chip => chip.addEventListener('click', () => chip.classList.toggle('selected')));
+document.querySelectorAll('.doc-card').forEach(card => card.addEventListener('click', () => {
+  document.querySelectorAll('.doc-card').forEach(item => item.classList.remove('selected'));
+  card.classList.add('selected');
+}));
+const sendButton = document.getElementById('send-to-review');
+sendButton.addEventListener('click', () => {
+  sendButton.textContent = 'Sent to Handler Review';
+  sendButton.disabled = true;
+  localStorage.setItem('legisforgeClassificationComplete', 'true');
+  setTimeout(() => { window.location.href = 'step-4.html'; }, 250);
+});
+</script>
+
+</body>
+</html>

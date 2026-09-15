@@ -1,0 +1,204 @@
+/* step 1 */
+:root{
+    --paper:#F7F7F3;
+    --panel:#FDFDFB;
+    --ink:#1B1E27;
+    --ink-soft:#565A66;
+    --ink-faint:#8A8E99;
+    --rule:#DEDDD5;
+    --rule-strong:#C7C6BC;
+    --seal:#8A2A32;
+    --seal-soft:#F4E4E2;
+    --amber:#9C6B1E;
+    --verified:#2E6B4C;
+    --radius-sm:3px;
+    --radius-md:6px;
+    font-size:15px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+    border-bottom:1px solid var(--rule);
+  }
+  .crumbs{display:flex; align-items:baseline; gap:8px; font-size:13.5px; color:var(--ink-soft);}
+  .crumbs .mark{font-family:'Source Serif 4', serif; font-weight:600; font-size:16px; color:var(--ink); margin-right:6px;}
+  .crumbs .sep{color:var(--rule-strong);}
+  .crumbs .current{color:var(--ink); font-weight:500;}
+  .flow-nav{display:flex;align-items:center;gap:10px;font-size:12px;}
+  .flow-nav a{color:var(--ink-soft);text-decoration:none;}
+  .flow-nav a:hover{color:var(--ink);text-decoration:underline;}
+
+  .steps{
+    display:flex; align-items:center;
+    padding:20px 40px 0;
+    max-width:920px; margin:0 auto;
+  }
+  .step{display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--ink-faint);}
+  .step .num{
+    width:22px;height:22px; border-radius:50%;
+    border:1px solid var(--rule-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-size:11px;
+    color:var(--ink-faint); background:var(--panel); flex-shrink:0;
+  }
+  .step.current .num{border-color:var(--ink); color:var(--ink); font-weight:500;}
+  .step.current span.label{color:var(--ink); font-weight:500;}
+  .step-line{flex:1; height:1px; background:var(--rule-strong); margin:0 12px;}
+
+  .layout{
+    max-width:920px; margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 260px;
+    gap:48px;
+    padding:34px 40px 80px;
+  }
+
+  .form-col h1{
+    font-family:'Source Serif 4', serif;
+    font-weight:600; font-size:24px;
+    margin:0 0 6px;
+  }
+  .form-col .sub{
+    font-size:13.5px; color:var(--ink-soft);
+    margin:0 0 30px;
+  }
+
+  .field-group{margin-bottom:22px;}
+  .field-group label{
+    display:block;
+    font-size:12.5px; font-weight:500;
+    color:var(--ink); margin-bottom:6px;
+  }
+  .field-group .hint{
+    font-size:11.5px; color:var(--ink-faint);
+    margin-top:5px;
+  }
+  .field-group input[type="text"],
+  .field-group input[type="date"]{
+    width:100%;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13.5px;
+    padding:10px 12px;
+    border:1px solid var(--rule-strong);
+    border-radius:var(--radius-sm);
+    background:var(--panel);
+    color:var(--ink);
+  }
+  .field-group input::placeholder{color:var(--ink-faint);}
+
+  .field-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+
+  .segmented{
+    display:flex;
+    border:1px solid var(--rule-strong);
+    border-radius:var(--radius-sm);
+    overflow:hidden;
+    width:fit-content;
+  }
+  .segmented button{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13px;
+    padding:8px 20px;
+    border:none;
+    background:var(--panel);
+    color:var(--ink-soft);
+    cursor:pointer;
+    border-right:1px solid var(--rule-strong);
+  }
+  .segmented button:last-child{border-right:none;}
+  .segmented button.selected{background:var(--ink); color:var(--paper);}
+
+  .tag-input-box{
+    display:flex; flex-wrap:wrap; gap:7px;
+    border:1px solid var(--rule-strong);
+    border-radius:var(--radius-sm);
+    background:var(--panel);
+    padding:8px 10px;
+  }
+  .tag{
+    display:flex; align-items:center; gap:6px;
+    font-size:12.5px;
+    background:#EFEEE7;
+    color:var(--ink);
+    padding:4px 8px 4px 10px;
+    border-radius:12px;
+  }
+  .tag .x{color:var(--ink-faint); cursor:pointer; font-size:11px;}
+  .tag-input-box input{
+    border:none; outline:none; background:transparent;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13px; flex:1; min-width:120px;
+    color:var(--ink); padding:4px;
+  }
+
+  .submit-row{
+    display:flex; align-items:center; gap:14px;
+    margin-top:34px; padding-top:24px;
+    border-top:1px solid var(--rule);
+  }
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13.5px;
+    padding:10px 20px;
+    border-radius:var(--radius-sm);
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    cursor:pointer;
+  }
+  .submit-note{font-size:12px; color:var(--ink-faint);}
+
+  /* ---- right rail ---- */
+  .rail{
+    border-left:1px solid var(--rule);
+    padding-left:32px;
+  }
+  .rail .rail-label{
+    font-size:11px; font-weight:600; letter-spacing:0.02em;
+    color:var(--ink-faint); margin-bottom:16px;
+  }
+  .rail-step{
+    display:flex; gap:11px;
+    margin-bottom:20px;
+  }
+  .rail-step .num{
+    width:20px;height:20px; border-radius:50%;
+    border:1px solid var(--rule-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-size:10px;
+    color:var(--ink-faint); background:var(--panel); flex-shrink:0;
+  }
+  .rail-step .name{font-size:12.5px; color:var(--ink); margin-bottom:2px; font-weight:500;}
+  .rail-step .desc{font-size:11.5px; color:var(--ink-faint); line-height:1.45;}
+
+  @media (max-width:700px){
+    .topbar{padding:12px 16px;}
+    .crumbs{font-size:12px; overflow:hidden; white-space:nowrap;}
+    .crumbs .mark{font-size:15px;}
+    .steps{padding:16px 16px 0; overflow-x:auto; justify-content:flex-start;}
+    .step{flex:0 0 auto;}
+    .step-line{min-width:20px; margin:0 7px;}
+    .layout{display:block; padding:28px 16px 48px;}
+    .form-col h1{font-size:22px;}
+    .field-row{grid-template-columns:1fr; gap:0;}
+    .segmented{width:100%;}
+    .segmented button{flex:1; padding-inline:10px;}
+    .submit-row{align-items:stretch; flex-direction:column; gap:9px;}
+    .submit-row .btn{width:100%;}
+    .rail{border-left:0; border-top:1px solid var(--rule); margin-top:34px; padding:24px 0 0;}
+  }
+/* step 1 */
