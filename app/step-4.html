@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LegisForge — Handler Routing Review</title>
+<link rel="stylesheet" href="step-4.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="crumbs">
+    <a class="mark" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\web\dashboard.html">LegisForge</a>
+    <span>Hallwell / Nordvik Acquisition</span>
+    <span class="sep">/</span>
+    <span class="current">Handler Routing Review</span>
+  </div>
+  <nav class="flow-nav" aria-label="Workflow navigation">
+    <a href="step-3.html">Back</a><span>/</span><a href="step-5.html">Next</a>
+  </nav>
+</div>
+
+<div class="steps">
+  <div class="step done"><span class="num">✓</span><span class="label">Deal intake</span></div>
+  <div class="step-line"></div>
+  <div class="step done"><span class="num">✓</span><span class="label">Upload</span></div>
+  <div class="step-line"></div>
+  <div class="step done"><span class="num">✓</span><span class="label">Classification</span></div>
+  <div class="step-line"></div>
+  <div class="step current"><span class="num">4</span><span class="label">Handler review</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">5</span><span class="label">Risk workspace</span></div>
+  <div class="step-line"></div>
+  <div class="step"><span class="num">6</span><span class="label">Report</span></div>
+</div>
+
+<div class="page-head">
+  <div>
+    <h1>Routing review</h1>
+    <p class="sub">Confirm department assignments before documents are distributed to each team.</p>
+  </div>
+  <span class="progress-pill">1 of 3 flagged documents resolved</span>
+</div>
+
+<div class="workspace">
+
+  <!-- LEFT: document list -->
+  <div class="left-col">
+    <div class="list-section-head needs">Needs decision (2)</div>
+
+    <div class="doc-row active">
+      <div class="type-icon pdf">PDF</div>
+      <div>
+        <div class="fname">IP License Agreement.pdf</div>
+        <div class="badges"><span class="mini-badge conflict">Conflict</span></div>
+      </div>
+    </div>
+
+    <div class="doc-row">
+      <div class="type-icon zip">ZIP</div>
+      <div>
+        <div class="fname">Scanned_Bundle_07.zip</div>
+        <div class="badges"><span class="mini-badge unrouted">Unrouted · 39%</span></div>
+      </div>
+    </div>
+
+    <div class="list-section-head">Recently resolved</div>
+
+    <div class="doc-row">
+      <div class="type-icon pdf">PDF</div>
+      <div>
+        <div class="fname">Correspondence_Misc.pdf</div>
+        <div class="badges"><span class="mini-badge done">Approved → General Commercial</span></div>
+      </div>
+    </div>
+
+    <div class="list-section-head">All documents (55)</div>
+
+    <div class="doc-row">
+      <div class="type-icon pdf">PDF</div>
+      <div>
+        <div class="fname">Shareholders' Agreement.pdf</div>
+        <div class="badges"><span class="mini-badge done">Corporate</span></div>
+      </div>
+    </div>
+
+    <div class="doc-row">
+      <div class="type-icon pdf">PDF</div>
+      <div>
+        <div class="fname">Trademark Register Extract.pdf</div>
+        <div class="badges"><span class="mini-badge done">IP</span></div>
+      </div>
+    </div>
+
+    <div class="doc-row">
+      <div class="type-icon zip">ZIP</div>
+      <div>
+        <div class="fname">Employment Contracts Bundle.zip</div>
+        <div class="badges"><span class="mini-badge done">Employment</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: preview + routing decision -->
+  <div class="right-col">
+    <div class="preview-area">
+      <div class="preview-meta">
+        <div>
+          <h2>IP License Agreement.pdf</h2>
+          <div class="fmeta">12 pages · Uploaded 09:41 · Extracted via OCR</div>
+        </div>
+        <button class="btn" id="open-viewer" type="button">Open full viewer</button>
+      </div>
+      <div class="pdf-preview">PDF preview — page 1 of 12</div>
+    </div>
+
+    <div class="ai-panel">
+      <div class="head">⚠ AI flagged a routing conflict</div>
+      <p>Classified 58% Corporate, 42% IP. The agreement both licenses trademarks (IP subject matter) and grants a security interest referenced in the Debenture Deed (Corporate subject matter).</p>
+      <span class="quote">"...Licensor grants Licensee a non-exclusive license to the Marks, and this Agreement is charged as security under the Debenture dated 3 January 2022..."</span>
+    </div>
+
+    <div class="routing-section">
+      <h3>Route to department(s)</h3>
+      <div class="dept-chip-row">
+        <span class="dept-chip selected">Corporate</span>
+        <span class="dept-chip selected">IP</span>
+        <span class="dept-chip">Employment</span>
+        <span class="dept-chip">Tax</span>
+        <span class="dept-chip">Regulatory</span>
+        <span class="dept-chip">Litigation</span>
+        <span class="dept-chip">General Commercial</span>
+      </div>
+
+      <h3>Actions</h3>
+      <div class="action-row">
+        <button class="btn" id="reassign" type="button">Reassign</button>
+        <button class="btn" id="duplicate" type="button">Duplicate to multiple teams</button>
+        <button class="btn warn" id="unresolved" type="button">Mark unresolved</button>
+        <button class="btn primary" id="approve-routing" type="button">Approve routing</button>
+      </div>
+
+      <div class="routing-log">
+        <h3>Routing history</h3>
+        <div class="log-item"><span class="when">09:52</span><span>AI classification: 58% Corporate, 42% IP — flagged as conflict</span></div>
+        <div class="log-item"><span class="when">10:15</span><span><b style="color:var(--ink);">R. Okafor</b> reviewed and selected both departments</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-bar">
+  <span class="footer-note">2 documents still need a routing decision before distribution</span>
+  <button class="btn big-primary" id="distribute" type="button">Distribute documents to departments</button>
+</div>
+
+<script>
+document.getElementById('open-viewer').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Viewer opened';
+  document.querySelector('.pdf-preview').textContent = 'Full viewer opened — page 1 of 12';
+});
+document.getElementById('reassign').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Select departments below';
+  document.querySelector('.dept-chip-row').scrollIntoView({behavior:'smooth', block:'center'});
+});
+document.getElementById('duplicate').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Departments selected';
+  document.querySelectorAll('.dept-chip.selected').forEach(chip => chip.classList.add('selected'));
+});
+document.querySelectorAll('.doc-row').forEach(row => row.addEventListener('click', () => {
+  document.querySelectorAll('.doc-row').forEach(item => item.classList.remove('active'));
+  row.classList.add('active');
+  const name = row.querySelector('.fname').textContent;
+  document.querySelector('.preview-meta h2').textContent = name;
+}));
+document.querySelectorAll('.dept-chip').forEach(chip => chip.addEventListener('click', () => chip.classList.toggle('selected')));
+const footerNote = document.querySelector('.footer-note');
+document.getElementById('unresolved').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Marked unresolved';
+  footerNote.textContent = 'Issue marked for follow-up';
+});
+document.getElementById('approve-routing').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Routing approved';
+  event.currentTarget.disabled = true;
+  footerNote.textContent = 'All routing decisions approved';
+});
+document.getElementById('distribute').addEventListener('click', event => {
+  event.currentTarget.textContent = 'Documents distributed';
+  event.currentTarget.disabled = true;
+  localStorage.setItem('legisforgeReviewComplete', 'true');
+  setTimeout(() => { window.location.href = 'step-5.html'; }, 250);
+});
+</script>
+
+</body>
+</html>

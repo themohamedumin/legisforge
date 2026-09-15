@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LegisForge — Deals</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F7F3;
+    --panel:#FDFDFB;
+    --ink:#1B1E27;
+    --ink-soft:#565A66;
+    --ink-faint:#8A8E99;
+    --rule:#DEDDD5;
+    --rule-strong:#C7C6BC;
+    --seal:#8A2A32;
+    --seal-soft:#F4E4E2;
+    --amber:#9C6B1E;
+    --amber-soft:#F5EAD4;
+    --verified:#2E6B4C;
+    --verified-soft:#E1EEE6;
+    --radius-sm:3px;
+    --radius-md:6px;
+    font-size:15px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+
+  /* ---- top nav ---- */
+  .topnav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px;
+    border-bottom:1px solid var(--rule);
+  }
+  .topnav-left{display:flex; align-items:center; gap:28px;}
+  .brand-mark{
+    font-family:'Source Serif 4', serif;
+    font-weight:600; font-size:17px;
+  }
+  .nav-tabs{display:flex; gap:22px;}
+  .nav-tabs a{
+    font-size:13px; text-decoration:none;
+    color:var(--ink-faint);
+    padding:4px 0;
+    border-bottom:2px solid transparent;
+  }
+  .nav-tabs a.active{color:var(--ink); font-weight:500; border-bottom-color:var(--ink);}
+
+  .topnav-right{display:flex; align-items:center; gap:16px;}
+  .icon-btn{
+    width:30px;height:30px;
+    border-radius:50%;
+    border:1px solid var(--rule-strong);
+    background:var(--panel);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .user-chip{
+    display:flex; align-items:center; gap:9px;
+    cursor:pointer;
+  }
+  .avatar{
+    width:28px;height:28px; border-radius:50%;
+    background:var(--ink); color:var(--paper);
+    font-size:11px; font-family:'IBM Plex Sans', sans-serif;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .user-chip .firm{font-size:12px; color:var(--ink-soft);}
+  .user-chip .who{font-size:12.5px; font-weight:500;}
+
+  /* ---- page head ---- */
+  .page-head{
+    max-width:1180px; margin:0 auto;
+    padding:30px 28px 20px;
+    display:flex; justify-content:space-between; align-items:flex-end;
+  }
+  .page-head h1{
+    font-family:'Source Serif 4', serif;
+    font-weight:600; font-size:24px; margin:0 0 4px;
+  }
+  .page-head .sub{font-size:13px; color:var(--ink-soft); margin:0;}
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13px;
+    padding:9px 16px;
+    border-radius:var(--radius-sm);
+    border:1px solid var(--rule-strong);
+    background:var(--panel);
+    color:var(--ink);
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+  }
+  .btn.primary{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+
+  /* ---- summary strip ---- */
+  .summary-strip{
+    max-width:1180px; margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--rule);
+    border:1px solid var(--rule);
+  }
+  .summary-strip .cell{
+    background:var(--panel);
+    padding:14px 18px;
+  }
+  .summary-strip .num{
+    font-family:'Source Serif 4', serif; font-size:22px; font-weight:600;
+  }
+  .summary-strip .num.high{color:var(--seal);}
+  .summary-strip .label{font-size:11px; color:var(--ink-faint); margin-top:2px;}
+
+  /* ---- filter row ---- */
+  .filter-row{
+    max-width:1180px; margin:0 auto;
+    margin-top: 20px;
+    padding:0 28px 16px;
+    display:flex; gap:8px;
+  }
+  .chip{
+    font-size:12px;
+    padding:5px 12px;
+    border-radius:12px;
+    border:1px solid var(--rule-strong);
+    background:var(--panel);
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .chip.on{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+
+  /* ---- deal grid ---- */
+  .deal-grid{
+    max-width:1180px; margin:0 auto;
+    padding:0 28px 70px;
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px;
+  }
+  .deal-card{
+    background:var(--panel);
+    border:1px solid var(--rule);
+    border-radius:var(--radius-md);
+    padding:18px 20px;
+    text-decoration:none;
+    color:inherit;
+    display:block;
+  }
+  .deal-card:hover{border-color:var(--rule-strong);}
+  .deal-top{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom:6px;
+  }
+  .deal-name{
+    font-family:'Source Serif 4', serif;
+    font-size:16.5px; font-weight:600;
+  }
+  .deal-type{
+    font-size:10px; font-weight:500;
+    padding:2px 8px; border-radius:2px;
+    background:#EFEEE7; color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .deal-parties{
+    font-size:12px; color:var(--ink-soft); margin-bottom:14px;
+  }
+
+  .stage-row{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:12px;
+  }
+  .stage-label{
+    font-size:11.5px; font-weight:500; color:var(--ink);
+    white-space:nowrap;
+  }
+  .stage-track{
+    flex:1; height:4px; background:var(--rule); border-radius:2px; overflow:hidden;
+  }
+  .stage-fill{height:100%; background:var(--ink); border-radius:2px;}
+  .stage-fill.complete{background:var(--verified);}
+
+  .deal-meta-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:12px; border-top:1px solid var(--rule);
+  }
+  .deal-stats{display:flex; gap:14px; font-size:11.5px; color:var(--ink-faint);}
+  .deal-stats .high{color:var(--seal); font-weight:500;}
+  .deal-stats .reg{color:var(--amber); font-weight:500;}
+  .updated{font-size:11px; color:var(--ink-faint);}
+
+  .continue-cta{
+    display:inline-block;
+    margin-top:14px;
+    font-size:12.5px; font-weight:500;
+    color:var(--ink);
+  }
+  .continue-cta .arrow{color:var(--ink-faint);}
+
+  .status-pill{
+    font-size:10.5px; font-weight:500;
+    padding:2px 8px; border-radius:10px;
+  }
+  .status-pill.progress{background:#EFEEE7; color:var(--ink-soft);}
+  .status-pill.attention{background:var(--amber-soft); color:var(--amber);}
+  .status-pill.done{background:var(--verified-soft); color:var(--verified);}
+
+  /* new-deal card */
+  .new-deal-card{
+    border:1.5px dashed var(--rule-strong);
+    border-radius:var(--radius-md);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:40px 20px;
+    text-decoration:none;
+    color:var(--ink-soft);
+  }
+  .new-deal-card .plus{
+    width:34px;height:34px; border-radius:50%;
+    border:1px solid var(--rule-strong);
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .new-deal-card .txt{font-size:13px; font-weight:500; color:var(--ink);}
+
+
+/* =========================================================
+   RESPONSIVE LAYOUT
+   ========================================================= */
+
+/* ---------- Large tablets / small laptops ---------- */
+@media (max-width: 1000px) {
+
+  .topnav {
+    padding: 14px 20px;
+  }
+
+  .page-head,
+  .summary-strip,
+  .filter-row,
+  .deal-grid {
+    max-width: 100%;
+  }
+
+  .page-head {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .summary-strip {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .filter-row {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .deal-grid {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+
+/* ---------- Tablet ---------- */
+@media (max-width: 768px) {
+
+  /* Navigation */
+  .topnav {
+    padding: 13px 18px;
+  }
+
+  .topnav-left {
+    gap: 20px;
+  }
+
+  .nav-tabs {
+    gap: 15px;
+  }
+
+  .nav-tabs a {
+    font-size: 12px;
+  }
+
+  .topnav-right {
+    gap: 10px;
+  }
+
+  .user-chip .firm {
+    display: none;
+  }
+
+  /* Page heading */
+  .page-head {
+    padding: 26px 18px 18px;
+  }
+
+  .page-head h1 {
+    font-size: 22px;
+  }
+
+  /* Summary */
+  .summary-strip {
+    margin-left: 18px;
+    margin-right: 18px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .summary-strip .cell {
+    padding: 13px 15px;
+  }
+
+  /* Filters */
+  .filter-row {
+    padding: 0 18px 15px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .filter-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip {
+    flex: 0 0 auto;
+  }
+
+  /* Deal cards */
+  .deal-grid {
+    padding: 0 18px 50px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .deal-card,
+  .new-deal-card {
+    width: 100%;
+  }
+
+  .new-deal-card {
+    min-height: 150px;
+  }
+}
+
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+
+  body {
+    font-size: 14px;
+  }
+
+  /* Navigation */
+  .topnav {
+    padding: 12px 14px;
+  }
+
+  .topnav-left {
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .brand-mark {
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  .nav-tabs {
+    gap: 12px;
+  }
+
+  .nav-tabs a {
+    font-size: 11px;
+  }
+
+  .topnav-right {
+    gap: 8px;
+  }
+
+  .icon-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .avatar {
+    width: 27px;
+    height: 27px;
+  }
+
+  .user-chip > div:last-child {
+    display: none;
+  }
+
+  /* Page header */
+  .page-head {
+    padding: 24px 14px 17px;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .page-head h1 {
+    font-size: 21px;
+  }
+
+  .page-head .sub {
+    font-size: 12px;
+  }
+
+  .page-head .btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* Summary cards */
+  .summary-strip {
+    margin-left: 14px;
+    margin-right: 14px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .summary-strip .cell {
+    padding: 12px 13px;
+  }
+
+  .summary-strip .num {
+    font-size: 20px;
+  }
+
+  .summary-strip .label {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  /* Filter chips */
+  .filter-row {
+    padding: 0 14px 14px;
+    gap: 6px;
+  }
+
+  .chip {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  /* Cards */
+  .deal-grid {
+    padding: 0 14px 45px;
+    gap: 10px;
+  }
+
+  .deal-card {
+    padding: 16px;
+  }
+
+  .deal-name {
+    font-size: 16px;
+  }
+
+  .deal-type,
+  .status-pill {
+    font-size: 9.5px;
+  }
+
+  .deal-parties {
+    font-size: 11.5px;
+    line-height: 1.4;
+    margin-bottom: 13px;
+  }
+
+  .stage-row {
+    gap: 8px;
+  }
+
+  .stage-label {
+    font-size: 10.5px;
+  }
+
+  .deal-meta-row {
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .deal-stats {
+    gap: 10px;
+    font-size: 10.5px;
+    flex-wrap: wrap;
+  }
+
+  .updated {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .continue-cta {
+    margin-top: 12px;
+    font-size: 12px;
+  }
+
+  .new-deal-card {
+    min-height: 135px;
+    padding: 30px 15px;
+  }
+}
+
+
+/* ---------- Small phones ---------- */
+@media (max-width: 400px) {
+
+  /* Hide secondary navigation when space gets really tight */
+  .nav-tabs {
+    display: none;
+  }
+
+  .topnav {
+    padding: 12px;
+  }
+
+  .page-head {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .page-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-head .btn {
+    text-align: center;
+    width: 100%;
+  }
+
+  .summary-strip {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .summary-strip .cell {
+    padding: 11px;
+  }
+
+  .deal-grid {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .deal-card {
+    padding: 14px;
+  }
+
+  .deal-top {
+    gap: 8px;
+  }
+
+  .deal-name {
+    font-size: 15px;
+  }
+
+  .deal-parties {
+    font-size: 11px;
+  }
+
+  .deal-meta-row {
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .updated {
+    align-self: flex-start;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="topnav-left">
+    <span class="brand-mark">LegisForge</span>
+    <div class="nav-tabs">
+      <a href="dashboard.html" class="active">Deals</a>
+      <a href="#">Templates</a>
+      <a href="#">Settings</a>
+    </div>
+  </div>
+  <div class="topnav-right">
+    <i style="font-size:14px" class="fa">&#xf0f3;</i>
+    <div class="user-chip">
+      <div class="avatar">RO</div>
+      <div>
+        <div class="who">R. Okafor</div>
+        <div class="firm">Hallwell &amp; Voss LLP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-head">
+  <div>
+    <h1>Deals</h1>
+    <p class="sub">5 active deals across your workspace</p>
+  </div>
+  <a class="btn primary" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\app\step-1.html">New deal</a>
+</div>
+
+<div class="summary-strip">
+  <div class="cell"><div class="num">5</div><div class="label">Active deals</div></div>
+  <div class="cell"><div class="num high">12</div><div class="label">High-severity issues open</div></div>
+  <div class="cell"><div class="num">3</div><div class="label">Awaiting your review</div></div>
+  <div class="cell"><div class="num">1</div><div class="label">Report ready to export</div></div>
+</div>
+
+<div class="filter-row">
+  <span class="chip on">All</span>
+  <span class="chip">Needs my review</span>
+  <span class="chip">In progress</span>
+  <span class="chip">Report ready</span>
+</div>
+
+<div class="deal-grid">
+
+  <!-- Deal 1: at Risk Workspace stage -->
+  <a class="deal-card" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\app\step-5.html">
+    <div class="deal-top">
+      <div class="deal-name">Project Nordvik</div>
+      <span class="deal-type">M&amp;A</span>
+    </div>
+    <div class="deal-parties">Hallwell Industries → Nordvik Group AB</div>
+    <div class="stage-row">
+      <span class="stage-label">Step 5 of 6</span>
+      <div class="stage-track"><div class="stage-fill" style="width:83%;"></div></div>
+    </div>
+    <div class="deal-meta-row">
+      <div class="deal-stats">
+        <span><b class="high" style="color:var(--seal); font-weight:500;">9</b> high</span>
+        <span class="reg">4 registry mismatches</span>
+      </div>
+      <span class="updated">Updated 2h ago</span>
+    </div>
+    <div class="continue-cta">Continue in risk workspace <span class="arrow">→</span></div>
+  </a>
+
+  <!-- Deal 2: at Classification stage -->
+  <a class="deal-card" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\app\step-3.html">
+    <div class="deal-top">
+      <div class="deal-name">Project Ferrous</div>
+      <span class="deal-type">M&amp;A</span>
+    </div>
+    <div class="deal-parties">Ferrous Metals Ltd → Aldgate Capital</div>
+    <div class="stage-row">
+      <span class="stage-label">Step 3 of 6</span>
+      <div class="stage-track"><div class="stage-fill" style="width:50%;"></div></div>
+    </div>
+    <div class="deal-meta-row">
+      <div class="deal-stats">
+        <span>58 documents</span>
+        <span class="reg">1 conflict</span>
+      </div>
+      <span class="updated">Updated yesterday</span>
+    </div>
+    <div class="continue-cta">Resolve classification <span class="arrow">→</span></div>
+  </a>
+
+  <!-- Deal 3: at Upload stage -->
+  <a class="deal-card" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\app\step-2.html">
+    <div class="deal-top">
+      <div class="deal-name">Meridian JV</div>
+      <span class="deal-type">JV</span>
+    </div>
+    <div class="deal-parties">Meridian Holdings ⇄ Castellan Partners</div>
+    <div class="stage-row">
+      <span class="stage-label">Step 2 of 6</span>
+      <div class="stage-track"><div class="stage-fill" style="width:33%;"></div></div>
+    </div>
+    <div class="deal-meta-row">
+      <div class="deal-stats">
+        <span>1 upload failed</span>
+      </div>
+      <span class="updated">Updated 3 days ago</span>
+    </div>
+    <div class="continue-cta">Resume upload <span class="arrow">→</span></div>
+  </a>
+
+  <!-- Deal 4: at Handler Review stage -->
+  <a class="deal-card" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\app\step-4.html">
+    <div class="deal-top">
+      <div class="deal-name">Project Larkspur II</div>
+      <span class="deal-type">M&amp;A</span>
+    </div>
+    <div class="deal-parties">Larkspur Retail → Ondine Group</div>
+    <div class="stage-row">
+      <span class="stage-label">Step 4 of 6</span>
+      <div class="stage-track"><div class="stage-fill" style="width:67%;"></div></div>
+    </div>
+    <div class="deal-meta-row">
+      <div class="deal-stats">
+        <span>2 documents need routing</span>
+      </div>
+      <span class="updated">Updated 5h ago</span>
+    </div>
+    <div class="continue-cta">Review routing <span class="arrow">→</span></div>
+  </a>
+
+  <!-- Deal 5: completed, report ready -->
+  <a class="deal-card" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\app\step-6.html">
+    <div class="deal-top">
+      <div class="deal-name">Project Larkspur</div>
+      <span class="status-pill done">Report ready</span>
+    </div>
+    <div class="deal-parties">Larkspur Retail → Verecund Capital</div>
+    <div class="stage-row">
+      <span class="stage-label">Step 6 of 6</span>
+      <div class="stage-track"><div class="stage-fill complete" style="width:100%;"></div></div>
+    </div>
+    <div class="deal-meta-row">
+      <div class="deal-stats">
+        <span>41 issues resolved</span>
+      </div>
+      <span class="updated">Completed 2 weeks ago</span>
+    </div>
+    <div class="continue-cta">Open report <span class="arrow">→</span></div>
+  </a>
+
+  <!-- New deal -->
+  <a class="new-deal-card" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\app\step-1.html">
+    <div class="plus">+</div>
+    <div class="txt">Start a new deal</div>
+  </a>
+
+</div>
+
+</body>
+</html>

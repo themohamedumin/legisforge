@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="step-5.css">
+<title>LegisForge — Department Risk Workspace</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="crumbs">
+    <a class="mark" href="C:\Users\DELL\Desktop\APPs & shit\Legisforge\web\dashboard.html">LegisForge</a>
+    <span>Hallwell / Nordvik Acquisition</span>
+    <span class="sep">/</span>
+    <span class="current">Risk Workspace</span>
+  </div>
+  <nav class="flow-nav" aria-label="Workflow navigation">
+    <a href="step-4.html">Back</a><span>/</span><a href="step-6.html">Report</a>
+  </nav>
+  <div class="dept-switch">
+    <button class="active">Corporate</button>
+    <button>IP</button>
+    <button>Employment</button>
+    <button>Tax</button>
+    <button>Real Estate</button>
+  </div>
+</div>
+
+<div class="summary">
+  <div class="cell"><div class="num">34</div><div class="label">Total issues</div></div>
+  <div class="cell high"><div class="num">6</div><div class="label">High severity</div></div>
+  <div class="cell med"><div class="num">15</div><div class="label">Medium severity</div></div>
+  <div class="cell"><div class="num">13</div><div class="label">Low severity</div></div>
+  <div class="cell registry"><div class="num">4</div><div class="label">Registry mismatches</div></div>
+  <div class="cell"><div class="num">58</div><div class="label">Documents assigned</div></div>
+  <div class="cell"><div class="num">3</div><div class="label">Multi-team documents</div></div>
+  <div class="cell"><div class="num" style="font-size:14px; padding-top:4px;">2h ago</div><div class="label">Last updated</div></div>
+</div>
+
+<div class="workspace">
+
+  <!-- COLUMN 1: filters + issue list -->
+  <div class="col">
+    <div class="col-head">
+      <h2>Issues — Corporate</h2>
+      <div class="filter-row">
+        <span class="chip on">All severity</span>
+        <span class="chip">High</span>
+        <span class="chip">Medium</span>
+        <span class="chip">Low</span>
+      </div>
+      <select class="filter-select"><option>Category — all</option></select>
+      <select class="filter-select"><option>Document — all</option></select>
+      <div class="filter-check"><input type="checkbox"> Registry issues only</div>
+      <div class="filter-check"><input type="checkbox"> Needs approval</div>
+      <div class="filter-check"><input type="checkbox"> Needs review</div>
+    </div>
+    <div class="sort-row">
+      <span>27 shown</span>
+      <span>Sort: Severity ▾</span>
+    </div>
+
+    <div class="issue-list">
+
+      <div class="issue-card active" onclick="selectCard(this)">
+        <div class="top-row">
+          <span class="id mono">COR-014</span>
+          <span class="badge high"><span class="dot"></span>High</span>
+        </div>
+        <p class="title">PSC register omits beneficial owner above 25% threshold</p>
+        <div class="meta">
+          <span>Ownership</span>
+          <span>Shareholders' Agreement, cl. 4.2</span>
+          <span class="reg-flag">Registry mismatch</span>
+        </div>
+        <div class="bottom-row">
+          <span class="status-tag new">Needs review</span>
+          <span><i style="font-size:11px" class="fa">&#xf075;</i> 3</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="selectCard(this)">
+        <div class="top-row">
+          <span class="id mono">COR-009</span>
+          <span class="badge high"><span class="dot"></span>High</span>
+        </div>
+        <p class="title">Floating charge not reflected in Companies House filings</p>
+        <div class="meta">
+          <span>Security</span>
+          <span>Debenture Deed</span>
+          <span class="reg-flag">Registry mismatch</span>
+        </div>
+        <div class="bottom-row">
+          <span class="status-tag">Edited</span>
+          <span><i style="font-size:11px" class="fa">&#xf075;</i> 1</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="selectCard(this)">
+        <div class="top-row">
+          <span class="id mono">COR-021</span>
+          <span class="badge high"><span class="dot"></span>High</span>
+        </div>
+        <p class="title">Related-party loan undisclosed in latest filed accounts</p>
+        <div class="meta">
+          <span>Financial</span>
+          <span>Intercompany Loan Agreement</span>
+        </div>
+        <div class="bottom-row">
+          <span class="status-tag new">Needs clarification</span>
+          <span><i style="font-size:11px" class="fa">&#xf075;</i> 0</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="selectCard(this)">
+        <div class="top-row">
+          <span class="id mono">COR-006</span>
+          <span class="badge med"><span class="dot"></span>Medium</span>
+        </div>
+        <p class="title">Resigned director still listed as active officer</p>
+        <div class="meta">
+          <span>Governance</span>
+          <span>Board Minutes, 14 Mar 2024</span>
+          <span class="reg-flag">Registry mismatch</span>
+        </div>
+        <div class="bottom-row">
+          <span class="status-tag">New</span>
+          <span><i style="font-size:11px" class="fa">&#xf075;</i> 0</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="selectCard(this)">
+        <div class="top-row">
+          <span class="id mono">COR-011</span>
+          <span class="badge med"><span class="dot"></span>Medium</span>
+        </div>
+        <p class="title">Change of registered office not filed within statutory window</p>
+        <div class="meta">
+          <span>Filing history</span>
+          <span>Correspondence bundle</span>
+        </div>
+        <div class="bottom-row">
+          <span class="status-tag">Edited</span>
+          <span><i style="font-size:11px" class="fa">&#xf075;</i> 2</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="selectCard(this)">
+        <div class="top-row">
+          <span class="id mono">COR-018</span>
+          <span class="badge med"><span class="dot"></span>Medium</span>
+        </div>
+        <p class="title">Share transfer lacks stamped SH01 confirmation</p>
+        <div class="meta">
+          <span>Ownership</span>
+          <span>Share Transfer Form</span>
+        </div>
+        <div class="bottom-row">
+          <span class="status-tag approved">Approved</span>
+          <span><i style="font-size:11px" class="fa">&#xf075;</i> 0</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="selectCard(this)">
+        <div class="top-row">
+          <span class="id mono">COR-027</span>
+          <span class="badge low"><span class="dot"></span>Low</span>
+        </div>
+        <p class="title">Charge over IP assets duplicated across two filings</p>
+        <div class="meta">
+          <span>Security</span>
+          <span>Multi-team: Corporate + IP</span>
+        </div>
+        <div class="bottom-row">
+          <span class="status-tag">New</span>
+          <span><i style="font-size:11px" class="fa">&#xf075;</i> 0</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="selectCard(this)">
+        <div class="top-row">
+          <span class="id mono">COR-030</span>
+          <span class="badge low"><span class="dot"></span>Low</span>
+        </div>
+        <p class="title">Articles of association amendment not filed with registrar</p>
+        <div class="meta">
+          <span>Governance</span>
+          <span>Board Minutes, 2 Feb 2023</span>
+        </div>
+        <div class="bottom-row">
+          <span class="status-tag">New</span>
+          <span><i style="font-size:11px" class="fa">&#xf075;</i> 0</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COLUMN 2: rich text issue editor -->
+<div class="col editor-column" style="border-right:1px solid var(--rule);">
+
+  <!-- TOOLBAR -->
+  <div class="editor-toolbar">
+
+    <div class="toolbar-group">
+
+      <button class="tb-btn" type="button" title="Undo" data-command="undo">
+        ↶
+      </button>
+
+      <button class="tb-btn" type="button" title="Redo" data-command="redo">
+        ↷
+      </button>
+
+      <div class="tb-sep"></div>
+
+      <select class="tb-select" id="format-select" title="Text style">
+        <option value="p">Normal text</option>
+        <option value="h2">Heading 1</option>
+        <option value="h3">Heading 2</option>
+        <option value="blockquote">Quote</option>
+      </select>
+
+      <div class="tb-sep"></div>
+
+      <button class="tb-btn" type="button" title="Bold" data-command="bold">
+        <b>B</b>
+      </button>
+
+      <button class="tb-btn" type="button" title="Italic" data-command="italic">
+        <i>I</i>
+      </button>
+
+      <button class="tb-btn" type="button" title="Underline" data-command="underline">
+        <u>U</u>
+      </button>
+
+      <div class="tb-sep"></div>
+
+      <button class="tb-btn" type="button" title="Bulleted list" data-command="insertUnorderedList">
+        •
+      </button>
+
+      <button class="tb-btn" type="button" title="Numbered list" data-command="insertOrderedList">
+        1.
+      </button>
+
+      <div class="tb-sep"></div>
+
+      <button class="tb-btn" type="button" title="Add link" id="add-link">
+        ↗
+      </button>
+
+      <button class="tb-btn" type="button" title="Add comment" id="add-comment">
+        ▢
+      </button>
+
+    </div>
+
+    <div class="editor-actions">
+      <button class="btn reject" id="reject-issue" type="button">
+        Reject
+      </button>
+
+      <button class="btn primary" id="approve-issue" type="button">
+        Approve
+      </button>
+    </div>
+
+  </div>
+
+
+  <!-- DOCUMENT -->
+  <div class="editor-scroll">
+
+    <article class="editor-document">
+
+      <!-- STATIC ISSUE HEADER -->
+      <header class="issue-header">
+
+        <div class="kicker">
+          <span class="id mono">
+            COR-014
+          </span>
+
+          <span class="badge high">
+            <span class="dot"></span>
+            High severity
+          </span>
+
+          <span class="badge ownership">
+            Ownership
+          </span>
+        </div>
+
+        <h1>
+          PSC register omits beneficial owner above 25% threshold
+        </h1>
+
+        <div class="document-meta">
+          <span>Risk review</span>
+          <span>·</span>
+          <span>Edited 2 hours ago</span>
+        </div>
+
+      </header>
+
+
+      <!-- ONLY THIS AREA IS EDITABLE -->
+      <div
+        class="editor-body"
+        id="issue-editor"
+        contenteditable="true"
+        spellcheck="true"
+      >
+
+        <h3>Summary</h3>
+
+        <p>
+          The Persons with Significant Control register filed at Companies House
+          lists two individuals holding voting rights, but the underlying
+          Shareholders' Agreement identifies a third party,
+          <b>Halvard Reiss</b>, holding a
+          <span class="highlight">31% indirect interest</span>
+          through a nominee arrangement disclosed at
+          <span class="evidence-chip">cl. 4.2 ↗</span>.
+          This party does not appear on the statutory register.
+        </p>
+
+
+        <h3>Analysis</h3>
+
+        <p>
+          Under the relevant PSC regime, any individual holding more than 25%
+          of shares or voting rights — directly or through an intermediary —
+          must be recorded. The nominee structure described in the agreement
+          appears to bring Mr Reiss within scope. The omission may constitute:
+        </p>
+
+        <ol>
+          <li>
+            A failure to maintain an accurate PSC register under the Companies Act;
+          </li>
+
+          <li>
+            A disclosure gap relevant to the buyer's ownership warranties;
+          </li>
+
+          <li>
+            Grounds for a corrective filing prior to completion.
+          </li>
+        </ol>
+
+
+        <h3>Recommendation</h3>
+
+        <p>
+          Request confirmation from the target's company secretary on the nominee
+          arrangement, and require a corrective PSC filing as a condition to
+          closing, or as a specific indemnity if timing does not allow.
+        </p>
+
+      </div>
+
+
+      <!-- STATIC FOOTER -->
+      <footer class="edit-history">
+        <span>✎ Edited by <b>R. Okafor</b></span>
+        <span>·</span>
+        <span>2 hours ago</span>
+      </footer>
+
+    </article>
+
+  </div>
+
+
+  <!-- LINK POPOVER -->
+  <div class="link-popover" id="link-popover">
+
+    <input
+      type="url"
+      id="link-url"
+      placeholder="Paste or type a URL..."
+      autocomplete="off"
+    />
+
+    <button type="button" id="apply-link">
+      Add
+    </button>
+
+  </div>
+
+</div>
+
+  <!-- COLUMN 3: source doc / registry / comments / history -->
+  <div class="col">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="selectTab(this,'doc')">Source</button>
+      <button class="tab-btn" onclick="selectTab(this,'reg')">Registry</button>
+      <button class="tab-btn" onclick="selectTab(this,'comments')">Comments</button>
+      <button class="tab-btn" onclick="selectTab(this,'history')">History</button>
+    </div>
+
+    <div class="tab-panel active" id="panel-doc">
+      <div class="doc-meta">
+        <span class="name">Shareholders' Agreement.pdf</span><br>
+        Page 7 of 34 · cl. 4.2
+      </div>
+      <div class="snippet-box">
+        "...the Nominee shall hold on trust for Halvard Reiss such number of A Ordinary Shares as represents, together with his existing holding, no less than thirty-one per cent (31%) of the fully diluted share capital..."
+      </div>
+      <div class="pdf-preview">PDF preview — page 7</div>
+      <button class="btn" id="open-document" type="button" style="width:100%;">Open in document</button>
+    </div>
+
+    <div class="tab-panel" id="panel-reg">
+      <div class="doc-meta">Companies House · PSC register comparison</div>
+      <table class="reg-table">
+        <tr><th>Field</th><th>Filed</th><th>Extracted</th></tr>
+        <tr>
+          <td>PSC count</td>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>H. Reiss listed</td>
+          <td>No</td>
+          <td>Yes (31%)</td>
+        </tr>
+        <tr>
+          <td>Nature of control</td>
+          <td>—</td>
+          <td>Indirect, &gt;25%</td>
+        </tr>
+      </table>
+      <div class="reg-status mismatch"><span class="dot"></span>Mismatch found</div>
+      <div style="margin-top:10px;"><span class="reg-source-link">View filing on Companies House ↗</span></div>
+    </div>
+
+    <div class="tab-panel" id="panel-comments">
+      <div class="comment">
+        <div class="avatar">RO</div>
+        <div>
+          <div class="who">R. Okafor <span class="when">2h ago</span></div>
+          <div class="text">Confirmed with company secretary — nominee deed exists but was never reflected in the PSC filing. Flagging for corrective action.</div>
+        </div>
+      </div>
+      <div class="comment">
+        <div class="avatar">MT</div>
+        <div>
+          <div class="who">M. Thorne <span class="when">1h ago</span></div>
+          <div class="text">@R.Okafor Suggest we make this a condition precedent rather than a warranty — cleaner for completion.</div>
+        </div>
+      </div>
+      <div class="comment">
+        <div class="avatar">RO</div>
+        <div>
+          <div class="who">R. Okafor <span class="when">40m ago</span></div>
+          <div class="text">Agreed. Updating the recommendation now.</div>
+          <div class="resolved-tag">✓ Resolved</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="panel-history">
+      <div class="history-item">
+        <span class="when">10:14</span>
+        <span class="what"><b>R. Okafor</b> approved recommendation</span>
+      </div>
+      <div class="history-item">
+        <span class="when">09:52</span>
+        <span class="what"><b>R. Okafor</b> edited recommendation section</span>
+      </div>
+      <div class="history-item">
+        <span class="when">09:30</span>
+        <span class="what"><b>M. Thorne</b> commented</span>
+      </div>
+      <div class="history-item">
+        <span class="when">08:05</span>
+        <span class="what">Status changed <b>New → Needs review</b></span>
+      </div>
+      <div class="history-item">
+        <span class="when">Yesterday</span>
+        <span class="what"><b>AI extraction</b> created issue from Shareholders' Agreement.pdf</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   ISSUE EDITOR
+   ========================================================= */
+
+const editor = document.getElementById('issue-editor');
+const editorSaveKey = 'legisforgeRiskEditor';
+
+
+/* =========================================================
+   LOAD SAVED CONTENT
+   ========================================================= */
+
+const savedEditor = localStorage.getItem(editorSaveKey);
+
+if (savedEditor) {
+  editor.innerHTML = savedEditor;
+}
+
+
+/* =========================================================
+   SAVE
+   ========================================================= */
+
+function saveEditor() {
+  localStorage.setItem(editorSaveKey, editor.innerHTML);
+}
+
+editor.addEventListener('input', saveEditor);
+
+
+/* =========================================================
+   TOOLBAR COMMANDS
+   ========================================================= */
+
+document
+  .querySelectorAll('.tb-btn[data-command]')
+  .forEach(button => {
+
+    button.addEventListener('mousedown', event => {
+
+      // Prevent the editor from losing its selection.
+      event.preventDefault();
+
+      editor.focus();
+
+      const command = button.dataset.command;
+
+      document.execCommand(
+        command,
+        false,
+        button.dataset.value || null
+      );
+
+      updateToolbarState();
+
+      saveEditor();
+    });
+
+  });
+
+
+/* =========================================================
+   FORMAT SELECTOR
+   ========================================================= */
+
+const formatSelect = document.getElementById('format-select');
+
+formatSelect.addEventListener('change', () => {
+
+  editor.focus();
+
+  const value = formatSelect.value;
+
+  document.execCommand(
+    'formatBlock',
+    false,
+    value
+  );
+
+  saveEditor();
+
+  updateToolbarState();
+
+});
+
+
+/* =========================================================
+   ACTIVE TOOLBAR STATES
+   ========================================================= */
+
+function updateToolbarState() {
+
+  document
+    .querySelectorAll('.tb-btn[data-command]')
+    .forEach(button => {
+
+      const command = button.dataset.command;
+
+      let active = false;
+
+      try {
+        active = document.queryCommandState(command);
+      } catch (error) {
+        active = false;
+      }
+
+      button.classList.toggle('active', active);
+
+    });
+
+}
+
+
+editor.addEventListener('keyup', updateToolbarState);
+editor.addEventListener('mouseup', updateToolbarState);
+editor.addEventListener('focus', updateToolbarState);
+
+
+/* =========================================================
+   LINK INSERTION
+   ========================================================= */
+
+const addLinkButton = document.getElementById('add-link');
+const linkPopover = document.getElementById('link-popover');
+const linkInput = document.getElementById('link-url');
+const applyLink = document.getElementById('apply-link');
+
+let savedSelection = null;
+
+
+/*
+ * Save the current text selection before opening
+ * the link popover.
+ */
+function saveSelection() {
+
+  const selection = window.getSelection();
+
+  if (!selection.rangeCount) return;
+
+  savedSelection = selection.getRangeAt(0);
+}
+
+
+function restoreSelection() {
+
+  if (!savedSelection) return;
+
+  const selection = window.getSelection();
+
+  selection.removeAllRanges();
+  selection.addRange(savedSelection);
+
+}
+
+
+/* Open link UI */
+
+addLinkButton.addEventListener('mousedown', event => {
+
+  event.preventDefault();
+
+  saveSelection();
+
+  const rect = addLinkButton.getBoundingClientRect();
+
+  linkPopover.style.top = `${rect.bottom + 7}px`;
+  linkPopover.style.left = `${rect.left}px`;
+
+  linkPopover.classList.add('show');
+
+  setTimeout(() => {
+    linkInput.focus();
+  }, 0);
+
+});
+
+
+/* Apply link */
+
+applyLink.addEventListener('click', () => {
+
+  const url = linkInput.value.trim();
+
+  if (!url) return;
+
+  restoreSelection();
+
+  editor.focus();
+
+  document.execCommand(
+    'createLink',
+    false,
+    url
+  );
+
+  linkInput.value = '';
+
+  linkPopover.classList.remove('show');
+
+  saveEditor();
+
+});
+
+
+/* Enter submits link */
+
+linkInput.addEventListener('keydown', event => {
+
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    applyLink.click();
+  }
+
+  if (event.key === 'Escape') {
+    linkPopover.classList.remove('show');
+  }
+
+});
+
+
+/* Close link popover */
+
+document.addEventListener('mousedown', event => {
+
+  if (
+    !linkPopover.contains(event.target) &&
+    event.target !== addLinkButton
+  ) {
+    linkPopover.classList.remove('show');
+  }
+
+});
+
+
+/* =========================================================
+   COMMENTS
+   ========================================================= */
+
+document
+  .getElementById('add-comment')
+  .addEventListener('mousedown', event => {
+
+    event.preventDefault();
+
+    editor.focus();
+
+    const selection = window.getSelection();
+
+    if (!selection.rangeCount) return;
+
+    const range = selection.getRangeAt(0);
+
+    /*
+     * If text is selected, visually mark it as a comment.
+     * This is intentionally lightweight rather than building
+     * a full commenting system.
+     */
+    if (!selection.isCollapsed) {
+
+      const mark = document.createElement('mark');
+
+      mark.className = 'editor-comment';
+      mark.title = 'Comment';
+
+      try {
+        range.surroundContents(mark);
+      } catch (error) {
+        console.warn(
+          'Could not create comment around this selection.'
+        );
+      }
+
+    } else {
+
+      /*
+       * No selection:
+       * insert a small comment marker at the cursor.
+       */
+      const marker = document.createElement('span');
+
+      marker.className = 'editor-comment';
+      marker.textContent = ' [comment] ';
+      marker.title = 'Comment';
+
+      range.insertNode(marker);
+
+    }
+
+    saveEditor();
+
+  });
+
+
+/* =========================================================
+   APPROVE / REJECT
+   ========================================================= */
+
+document
+  .getElementById('approve-issue')
+  .addEventListener('click', event => {
+
+    event.currentTarget.textContent = 'Approved';
+    event.currentTarget.disabled = true;
+
+    const activeCard =
+      document.querySelector('.issue-card.active');
+
+    if (activeCard) {
+
+      const status =
+        activeCard.querySelector('.status-tag');
+
+      if (status) {
+        status.textContent = 'Approved';
+        status.classList.add('approved');
+      }
+
+    }
+
+  });
+
+
+document
+  .getElementById('reject-issue')
+  .addEventListener('click', event => {
+
+    event.currentTarget.textContent = 'Rejected';
+    event.currentTarget.disabled = true;
+
+  });
+
+
+/* =========================================================
+   EXISTING DOCUMENT CONTROLS
+   ========================================================= */
+
+document
+  .getElementById('open-document')
+  .addEventListener('click', event => {
+
+    event.currentTarget.textContent = 'Document opened';
+
+    const preview =
+      document.querySelector('#panel-doc .pdf-preview');
+
+    if (preview) {
+      preview.textContent =
+        'Document viewer opened — page 7';
+    }
+
+  });
+
+
+/* =========================================================
+   DEPARTMENT SWITCHER
+   ========================================================= */
+
+document
+  .querySelectorAll('.dept-switch button')
+  .forEach(button => {
+
+    button.addEventListener('click', () => {
+
+      document
+        .querySelectorAll('.dept-switch button')
+        .forEach(item => {
+          item.classList.remove('active');
+        });
+
+      button.classList.add('active');
+
+    });
+
+  });
+
+
+/* =========================================================
+   ISSUE CARD SELECTION
+   ========================================================= */
+
+function selectCard(el) {
+
+  document
+    .querySelectorAll('.issue-card')
+    .forEach(card => {
+      card.classList.remove('active');
+    });
+
+  el.classList.add('active');
+
+}
+
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+function selectTab(btn, id) {
+
+  document
+    .querySelectorAll('.tab-btn')
+    .forEach(button => {
+      button.classList.remove('active');
+    });
+
+  document
+    .querySelectorAll('.tab-panel')
+    .forEach(panel => {
+      panel.classList.remove('active');
+    });
+
+  btn.classList.add('active');
+
+  document
+    .getElementById('panel-' + id)
+    .classList.add('active');
+
+}
+
+
+/* =========================================================
+   FILTER CHIPS
+   ========================================================= */
+
+document
+  .querySelectorAll('.chip')
+  .forEach(chip => {
+
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('on');
+    });
+
+  });
+
+
+/* =========================================================
+   FILTER CHECKBOXES
+   ========================================================= */
+
+document
+  .querySelectorAll('.filter-check input')
+  .forEach(input => {
+
+    input.addEventListener('change', () => {
+
+      const selected = [
+        ...document.querySelectorAll(
+          '.filter-check input:checked'
+        )
+      ].map(
+        item => item.parentElement.textContent.trim()
+      );
+
+      document
+        .querySelector('.sort-row span')
+        .textContent =
+          selected.length
+            ? `${selected.length} filters active`
+            : 'Sorted by severity';
+
+    });
+
+  });
+</script>
+
+</body>
+</html>
